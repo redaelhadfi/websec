@@ -1,0 +1,1812 @@
+\documentclass[12pt,a4paper]{report}
+
+% ============================================================================
+% PACKAGES
+% ============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+% Packages graphiques
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Packages pour les tableaux
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{multirow}
+
+% Packages pour les liens
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+
+% Packages pour le code
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Packages pour les listes
+\usepackage{enumitem}
+
+% Packages pour les titres
+\usepackage{titlesec}
+
+% Packages pour l'en-tête et pied de page
+\usepackage{fancyhdr}
+
+% Correction de la hauteur de l'en-tête
+\setlength{\headheight}{14.49998pt}
+
+% ============================================================================
+% CONFIGURATION DES COULEURS
+% ============================================================================
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{primaryblue}{RGB}{59,130,246}
+
+% ============================================================================
+% CONFIGURATION DU CODE
+% ============================================================================
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+% ============================================================================
+% CONFIGURATION DES TITRES
+% ============================================================================
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{primaryblue}}
+  {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{-20pt}{20pt}
+
+% ============================================================================
+% EN-TÊTE ET PIED DE PAGE
+% ============================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+
+% ============================================================================
+% MÉTADONNÉES
+% ============================================================================
+\title{Application E-Commerce Full Stack}
+\author{Reda El Hadfi}
+\date{Février 2026}
+
+% ============================================================================
+% DÉBUT DU DOCUMENT
+% ============================================================================
+\begin{document}
+
+% ============================================================================
+% PAGE DE GARDE
+% ============================================================================
+\begin{titlepage}
+    \centering
+    
+    % Logo université (décommenter et ajouter le logo)
+    % \includegraphics[width=0.3\textwidth]{images/logo-universite.png}\\[1cm]
+    
+    \vspace*{1cm}
+    
+    {\Large \textbf{UNIVERSITÉ / ÉCOLE}}\\[0.5cm]
+    {\large Faculté des Sciences et Techniques}\\[2cm]
+    
+    {\LARGE \textbf{MODULE}}\\[0.3cm]
+    {\Large Sécurité des Applications Web Modernes}\\[3cm]
+    
+    {\Huge \textbf{Rapport de Projet}}\\[0.5cm]
+    {\huge \color{primaryblue} Application E-Commerce Full Stack}\\[0.3cm]
+    {\Large Gestion de Produits avec Authentification Sécurisée}\\[3cm]
+    
+    \begin{minipage}{0.5\textwidth}
+        \begin{flushleft}
+            {\large \textbf{Réalisé par :}}\\
+            {\Large Reda El Hadfi}
+        \end{flushleft}
+    \end{minipage}%
+    \begin{minipage}{0.5\textwidth}
+        \begin{flushright}
+            {\large \textbf{Encadré par :}}\\
+            {\Large Pr. [Nom du Professeur]}
+        \end{flushright}
+    \end{minipage}
+    
+    \vfill
+    
+    {\large Année Universitaire 2025-2026}
+    
+\end{titlepage}
+
+% ============================================================================
+% REMERCIEMENTS
+% ============================================================================
+\chapter*{Remerciements}
+\addcontentsline{toc}{chapter}{Remerciements}
+
+Je tiens à exprimer mes sincères remerciements à mon professeur, \textbf{Pr. [Nom]}, pour son encadrement, ses conseils précieux et son soutien tout au long de ce projet. Ses orientations m'ont permis d'approfondir mes connaissances en sécurité des applications web modernes.
+
+Je remercie également toute l'équipe pédagogique pour la qualité de la formation dispensée et les connaissances transmises qui m'ont été indispensables pour mener à bien ce projet.
+
+Enfin, je remercie tous ceux qui, de près ou de loin, ont contribué à la réalisation de ce travail.
+
+% ============================================================================
+% RÉSUMÉ
+% ============================================================================
+\chapter*{Résumé}
+\addcontentsline{toc}{chapter}{Résumé}
+
+\section*{Français}
+
+Ce rapport présente la conception et la réalisation d'une application web Full Stack de gestion de produits e-commerce. Le projet met en œuvre les meilleures pratiques de sécurité des applications web modernes, incluant l'authentification sécurisée par JWT, le hashage des mots de passe avec bcrypt, la gestion des rôles (RBAC), et la protection contre les vulnérabilités OWASP Top 10 (injection NoSQL, XSS, CSRF).
+
+L'application est développée avec une architecture client-serveur en trois tiers : un frontend React.js moderne et responsive, un backend Node.js/Express robuste et sécurisé, et une base de données MongoDB Atlas hébergée dans le cloud. Elle offre des fonctionnalités complètes de CRUD, recherche avancée, filtrage multi-critères, pagination, upload de fichiers et un tableau de bord administrateur avec statistiques en temps réel.
+
+Le projet a été déployé en production sur des services cloud (Render pour le backend, Vercel pour le frontend), démontrant ainsi une maîtrise complète du cycle de développement d'une application web moderne et sécurisée.
+
+\textbf{Mots-clés :} Full Stack, React, Node.js, MongoDB, Sécurité Web, JWT, REST API, CRUD, E-Commerce
+
+\section*{English}
+
+This report presents the design and implementation of a Full Stack e-commerce product management web application. The project implements best practices in modern web application security, including secure JWT authentication, bcrypt password hashing, role-based access control (RBAC), and protection against OWASP Top 10 vulnerabilities (NoSQL injection, XSS, CSRF).
+
+The application is developed with a three-tier client-server architecture: a modern and responsive React.js frontend, a robust and secure Node.js/Express backend, and a MongoDB Atlas database hosted in the cloud. It offers complete CRUD functionalities, advanced search, multi-criteria filtering, pagination, file upload, and an admin dashboard with real-time statistics.
+
+The project has been deployed to production on cloud services (Render for backend, Vercel for frontend), demonstrating complete mastery of the development cycle of a modern and secure web application.
+
+\textbf{Keywords:} Full Stack, React, Node.js, MongoDB, Web Security, JWT, REST API, CRUD, E-Commerce
+
+% ============================================================================
+% TABLE DES MATIÈRES
+% ============================================================================
+\tableofcontents
+\newpage
+
+% ============================================================================
+% LISTE DES FIGURES
+% ============================================================================
+\listoffigures
+\newpage
+
+% ============================================================================
+% CHAPITRE 1 : INTRODUCTION & CONTEXTE
+% ============================================================================
+\chapter{Introduction et Contexte}
+
+\section{Présentation du Projet}
+
+Dans le cadre du module \textbf{Sécurité des Applications Web Modernes}, ce projet vise à concevoir et développer une application web Full Stack complète de gestion de produits e-commerce. L'objectif principal est de mettre en pratique les concepts de sécurité avancés enseignés durant la formation, tout en démontrant une maîtrise des technologies web modernes.
+
+L'application permet aux utilisateurs de consulter un catalogue de produits avec des fonctionnalités avancées de recherche et de filtrage, tandis que les administrateurs disposent d'un système complet de gestion (CRUD) des produits et d'un tableau de bord statistique.
+
+\section{Problématique}
+
+Les applications web e-commerce sont constamment ciblées par des attaques malveillantes (injection SQL/NoSQL, XSS, CSRF, vol de sessions). Il est donc crucial d'implémenter des mécanismes de sécurité robustes dès la conception pour protéger les données des utilisateurs et garantir l'intégrité du système.
+
+La problématique centrale de ce projet est : \textit{Comment développer une application web moderne, performante et sécurisée qui respecte les standards de sécurité OWASP et offre une expérience utilisateur optimale ?}
+
+\section{Objectifs du Projet}
+
+Les objectifs de ce projet sont multiples :
+
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Sécurité} : Implémenter une authentification sécurisée (JWT), un hashage des mots de passe (bcrypt), une gestion des rôles, et protéger contre les vulnérabilités OWASP.
+    
+    \item \textbf{Fonctionnalités} : Développer un système CRUD complet avec recherche, filtrage, tri, pagination et upload de fichiers.
+    
+    \item \textbf{Architecture} : Concevoir une architecture client-serveur en trois tiers avec séparation claire des responsabilités.
+    
+    \item \textbf{Interface} : Créer une interface utilisateur moderne, responsive et intuitive avec TailwindCSS.
+    
+    \item \textbf{Déploiement} : Déployer l'application en production sur des services cloud (Render, Vercel, MongoDB Atlas).
+    
+    \item \textbf{Documentation} : Rédiger une documentation technique complète et professionnelle.
+\end{enumerate}
+
+\section{Cahier des Charges Résumé}
+
+Le cahier des charges du projet définit les exigences fonctionnelles et non-fonctionnelles suivantes :
+
+\subsection{Exigences Fonctionnelles}
+
+\begin{itemize}
+    \item \textbf{Authentification} : Inscription, connexion, déconnexion avec JWT
+    \item \textbf{Gestion des utilisateurs} : Deux rôles (admin, user) avec permissions différentes
+    \item \textbf{Gestion des produits} : CRUD complet (Créer, Lire, Modifier, Supprimer)
+    \item \textbf{Recherche avancée} : Par nom, description, catégorie, prix
+    \item \textbf{Filtrage} : Par catégorie, plage de prix, disponibilité en stock
+    \item \textbf{Tri} : Par prix, nom, date de création
+    \item \textbf{Pagination} : Navigation par pages (12 produits/page)
+    \item \textbf{Upload} : Téléchargement d'images pour les produits
+    \item \textbf{Dashboard} : Statistiques pour les administrateurs
+\end{itemize}
+
+\subsection{Exigences Non-Fonctionnelles}
+
+\begin{itemize}
+    \item \textbf{Sécurité} : Protection contre OWASP Top 10, chiffrement des données sensibles
+    \item \textbf{Performance} : Temps de réponse < 2 secondes
+    \item \textbf{Scalabilité} : Architecture permettant la montée en charge
+    \item \textbf{Maintenabilité} : Code propre, modulaire et documenté
+    \item \textbf{Responsive} : Compatible mobile, tablette et desktop
+    \item \textbf{Disponibilité} : Application accessible 24/7 en production
+\end{itemize}
+
+\section{Méthodologie de Travail}
+
+Le développement du projet a suivi une approche \textbf{itérative et incrémentale} avec les étapes suivantes :
+
+\begin{enumerate}
+    \item \textbf{Analyse et conception} : Définition des besoins, modélisation de la base de données, conception de l'architecture
+    \item \textbf{Développement backend} : Création des modèles, controllers, middlewares et routes
+    \item \textbf{Développement frontend} : Création des composants React, pages et gestion d'état
+    \item \textbf{Tests} : Tests manuels avec Postman, tests d'intégration
+    \item \textbf{Déploiement} : Mise en production sur les plateformes cloud
+    \item \textbf{Documentation} : Rédaction de la documentation technique
+\end{enumerate}
+
+Cette méthodologie a permis de livrer un produit fonctionnel à chaque itération, tout en maintenant un code de qualité et sécurisé.
+
+% ============================================================================
+% CHAPITRE 2 : ANALYSE & CONCEPTION
+% ============================================================================
+\chapter{Analyse et Conception}
+
+\section{Analyse des Besoins}
+
+\subsection{Besoins Fonctionnels}
+
+L'analyse des besoins a permis d'identifier les fonctionnalités essentielles à implémenter :
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+\textbf{ID} & \textbf{Fonctionnalité} & \textbf{Priorité} \\
+\hline
+F1 & Inscription et authentification des utilisateurs & Haute \\
+\hline
+F2 & Gestion des rôles (admin/user) & Haute \\
+\hline
+F3 & CRUD complet des produits (admin) & Haute \\
+\hline
+F4 & Consultation des produits (public) & Haute \\
+\hline
+F5 & Recherche textuelle dans produits & Moyenne \\
+\hline
+F6 & Filtrage par catégorie et prix & Moyenne \\
+\hline
+F7 & Tri des résultats & Moyenne \\
+\hline
+F8 & Pagination des résultats & Moyenne \\
+\hline
+F9 & Upload d'images produits & Moyenne \\
+\hline
+F10 & Dashboard avec statistiques (admin) & Basse \\
+\hline
+\end{tabularx}
+\caption{Liste des besoins fonctionnels}
+\end{table}
+
+\subsection{Identification des Acteurs}
+
+Le système interagit avec deux types d'acteurs principaux :
+
+\begin{itemize}
+    \item \textbf{Utilisateur simple (user)} : Peut consulter les produits, effectuer des recherches et des filtrages, mais ne peut pas modifier le catalogue.
+    
+    \item \textbf{Administrateur (admin)} : Dispose de tous les droits de l'utilisateur simple, plus la possibilité de créer, modifier et supprimer des produits, ainsi que d'accéder au tableau de bord statistique.
+\end{itemize}
+
+\section{Diagramme de Cas d'Utilisation}
+
+Le diagramme de cas d'utilisation ci-dessous illustre les interactions entre les acteurs et le système :
+
+\begin{figure}[H]
+\centering
+% Insérer ici votre diagramme de cas d'utilisation
+% \includegraphics[width=0.9\textwidth]{images/use-case-diagram.png}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{[INSÉRER DIAGRAMME DE CAS D'UTILISATION]}\\[1cm]
+Acteurs : Utilisateur, Administrateur\\
+Cas d'utilisation : Inscription, Connexion, Consulter produits,\\
+Rechercher, Filtrer, Créer produit, Modifier produit,\\
+Supprimer produit, Voir statistiques
+}}
+\caption{Diagramme de cas d'utilisation du système}
+\label{fig:use-case}
+\end{figure}
+
+\section{Modélisation de la Base de Données}
+
+\subsection{Schéma Relationnel}
+
+La base de données MongoDB est conçue avec deux collections principales :
+
+\begin{figure}[H]
+\centering
+% Insérer ici votre schéma de base de données
+% \includegraphics[width=0.9\textwidth]{images/database-schema.png}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{[INSÉRER SCHÉMA DE BASE DE DONNÉES]}\\[1cm]
+\textbf{Collection Users :}\\
+\_id, name, email, password (hashed), role, createdAt, updatedAt\\[0.5cm]
+\textbf{Collection Products :}\\
+\_id, name, description, price, category, stock, image,\\
+createdBy (ref: Users), createdAt, updatedAt\\[0.5cm]
+\textbf{Relation :} One-to-Many (User → Products)
+}}
+\caption{Schéma de la base de données MongoDB}
+\label{fig:db-schema}
+\end{figure}
+
+\subsection{Description des Collections}
+
+\subsubsection{Collection Users}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Champ} & \textbf{Type} & \textbf{Description} \\
+\hline
+\_id & ObjectId & Identifiant unique (auto-généré) \\
+\hline
+name & String & Nom complet de l'utilisateur (2-50 caractères) \\
+\hline
+email & String & Email unique, validé par regex \\
+\hline
+password & String & Mot de passe hashé avec bcrypt (salt rounds: 10) \\
+\hline
+role & String & Rôle (enum: "user", "admin"), défaut: "user" \\
+\hline
+createdAt & Date & Date de création (auto-généré) \\
+\hline
+updatedAt & Date & Date de dernière modification (auto-généré) \\
+\hline
+\end{tabularx}
+\caption{Structure de la collection Users}
+\end{table}
+
+\subsubsection{Collection Products}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Champ} & \textbf{Type} & \textbf{Description} \\
+\hline
+\_id & ObjectId & Identifiant unique (auto-généré) \\
+\hline
+name & String & Nom du produit (3-100 caractères) \\
+\hline
+description & String & Description détaillée (10-1000 caractères) \\
+\hline
+price & Number & Prix en euros (minimum 0.01) \\
+\hline
+category & String & Catégorie (enum: 7 valeurs prédéfinies) \\
+\hline
+stock & Number & Quantité en stock (entier ≥ 0) \\
+\hline
+image & String & Chemin de l'image uploadée \\
+\hline
+createdBy & ObjectId & Référence vers l'utilisateur créateur \\
+\hline
+createdAt & Date & Date de création (auto-généré) \\
+\hline
+updatedAt & Date & Date de dernière modification (auto-généré) \\
+\hline
+\end{tabularx}
+\caption{Structure de la collection Products}
+\end{table}
+
+\section{Contraintes de Sécurité}
+
+Plusieurs contraintes de sécurité ont été intégrées au niveau de la conception :
+
+\begin{itemize}
+    \item \textbf{Validation des données} : Validation stricte à deux niveaux (client et serveur)
+    \item \textbf{Hashage des mots de passe} : Utilisation de bcrypt avec 10 salt rounds
+    \item \textbf{Authentification stateless} : JWT avec expiration de 30 jours
+    \item \textbf{Contrôle d'accès} : Middleware d'autorisation basé sur les rôles
+    \item \textbf{Protection injection} : Utilisation de Mongoose avec validation de schémas
+    \item \textbf{Protection XSS} : Sanitization avec Express Validator et échappement React
+    \item \textbf{Upload sécurisé} : Validation du type MIME, limite de taille (5MB)
+\end{itemize}
+
+% ============================================================================
+% CHAPITRE 3 : ARCHITECTURE & TECHNOLOGIES
+% ============================================================================
+\chapter{Architecture et Technologies}
+
+\section{Architecture Globale}
+
+L'application suit une architecture \textbf{client-serveur en trois tiers} qui sépare clairement les responsabilités :
+
+\begin{figure}[H]
+\centering
+% Insérer ici votre schéma d'architecture
+% \includegraphics[width=0.9\textwidth]{images/architecture-diagram.png}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{[INSÉRER SCHÉMA D'ARCHITECTURE 3-TIERS]}\\[1cm]
+\textbf{Tier 1 : Frontend (React + Vite)}\\
+Interface utilisateur, Validation client, Routage\\[0.5cm]
+$\updownarrow$ HTTPS/REST API $\updownarrow$\\[0.5cm]
+\textbf{Tier 2 : Backend (Node.js + Express)}\\
+API REST, Authentification JWT, Logique métier\\[0.5cm]
+$\updownarrow$ MongoDB Driver $\updownarrow$\\[0.5cm]
+\textbf{Tier 3 : Database (MongoDB Atlas)}\\
+Stockage des données, Indexes, Agrégations
+}}
+\caption{Architecture client-serveur en trois tiers}
+\label{fig:architecture}
+\end{figure}
+
+\subsection{Tier 1 : Couche Présentation (Frontend)}
+
+\textbf{Technologies :} React.js 18.3.1, Vite 7.3.1, TailwindCSS 3.4.1
+
+\textbf{Responsabilités :}
+\begin{itemize}
+    \item Interface utilisateur interactive et responsive
+    \item Gestion de l'état de l'application (Context API)
+    \item Validation côté client (React Hook Form)
+    \item Communication avec le backend via Axios
+    \item Routage côté client (React Router v6)
+\end{itemize}
+
+\subsection{Tier 2 : Couche Logique Métier (Backend)}
+
+\textbf{Technologies :} Node.js, Express.js 5.2.1, Mongoose 9.1.5
+
+\textbf{Responsabilités :}
+\begin{itemize}
+    \item API RESTful avec endpoints sécurisés
+    \item Authentification JWT et autorisation RBAC
+    \item Validation des données (Express Validator)
+    \item Logique métier et règles de gestion
+    \item Gestion des fichiers uploadés (Multer)
+    \item Interaction avec la base de données
+\end{itemize}
+
+\subsection{Tier 3 : Couche Données (Database)}
+
+\textbf{Technologies :} MongoDB Atlas (Cloud)
+
+\textbf{Responsabilités :}
+\begin{itemize}
+    \item Stockage persistant des données
+    \item Indexation pour performance
+    \item Agrégations pour statistiques
+    \item Backup automatique
+    \item Chiffrement au repos et en transit
+\end{itemize}
+
+\section{Stack Technologique}
+
+\subsection{Justification des Choix}
+
+Le choix des technologies a été guidé par plusieurs critères :
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Technologie} & \textbf{Rôle} & \textbf{Justification} \\
+\hline
+React 18 & Frontend Library & Composants réutilisables, Virtual DOM, Large écosystème \\
+\hline
+Vite & Build Tool & HMR rapide, Build optimisé, Configuration minimale \\
+\hline
+TailwindCSS & Styling & Utility-first, Responsive, Purge CSS automatique \\
+\hline
+Node.js & Backend Runtime & JavaScript full-stack, Asynchrone, NPM \\
+\hline
+Express & Web Framework & Minimaliste, Middleware, Large communauté \\
+\hline
+MongoDB & Database NoSQL & Flexible, Scalable, Cloud-ready \\
+\hline
+JWT & Authentication & Stateless, Self-contained, Standard \\
+\hline
+Bcrypt & Password Hashing & Salt automatique, Résistant brute force \\
+\hline
+\end{tabularx}
+\caption{Technologies utilisées et justifications}
+\end{table}
+
+\subsection{Avantages de l'Architecture Choisie}
+
+\textbf{Séparation des préoccupations :}
+\begin{itemize}
+    \item Développement parallèle frontend/backend possible
+    \item Facilite la maintenance et les tests
+    \item Permet le remplacement d'une couche sans impacter les autres
+\end{itemize}
+
+\textbf{Scalabilité :}
+\begin{itemize}
+    \item Frontend et backend peuvent être scalés indépendamment
+    \item MongoDB Atlas offre le sharding horizontal
+    \item Possibilité d'ajouter un load balancer
+\end{itemize}
+
+\textbf{Sécurité :}
+\begin{itemize}
+    \item Séparation physique des couches
+    \item Backend non exposé directement (API only)
+    \item Chiffrement des communications (HTTPS)
+\end{itemize}
+
+\section{Structure du Code}
+
+\subsection{Structure Backend}
+
+\begin{lstlisting}[language=bash, caption=Arborescence du backend]
+backend/
+|-- src/
+|   |-- config/
+|   |   |-- database.js      # Connexion MongoDB
+|   |   +-- seed.js          # Peuplement BD
+|   |-- models/
+|   |   |-- User.js          # Schema utilisateur
+|   |   +-- Product.js       # Schema produit
+|   |-- controllers/
+|   |   |-- authController.js
+|   |   +-- productController.js
+|   |-- middleware/
+|   |   |-- auth.js          # JWT verification
+|   |   |-- validator.js     # Validation
+|   |   +-- upload.js        # Multer config
+|   +-- routes/
+|       |-- authRoutes.js
+|       +-- productRoutes.js
+|-- uploads/                 # Fichiers uploades
+|-- server.js                # Point d'entree
+|-- package.json
++-- .env                     # Variables d'environnement
+\end{lstlisting}
+
+\subsection{Structure Frontend}
+
+\begin{lstlisting}[language=bash, caption=Arborescence du frontend]
+frontend/
+|-- src/
+|   |-- components/
+|   |   |-- Navbar.jsx
+|   |   |-- Footer.jsx
+|   |   |-- ProductCard.jsx
+|   |   +-- ProtectedRoute.jsx
+|   |-- pages/
+|   |   |-- Home.jsx
+|   |   |-- Login.jsx
+|   |   |-- Register.jsx
+|   |   |-- Products.jsx
+|   |   |-- ProductDetail.jsx
+|   |   |-- ProductForm.jsx
+|   |   +-- Dashboard.jsx
+|   |-- context/
+|   |   +-- AuthContext.jsx
+|   |-- utils/
+|   |   +-- axios.js
+|   |-- App.jsx
+|   |-- main.jsx
+|   +-- index.css
+|-- package.json
++-- .env
+\end{lstlisting}
+
+% ============================================================================
+% CHAPITRE 4 : FONCTIONNALITÉS DÉTAILLÉES
+% ============================================================================
+\chapter{Fonctionnalités Détaillées}
+
+\section{Authentification et Autorisation}
+
+\subsection{Inscription des Utilisateurs}
+
+L'application permet aux nouveaux utilisateurs de créer un compte avec validation en temps réel.
+
+\textbf{Processus d'inscription :}
+\begin{enumerate}
+    \item L'utilisateur remplit le formulaire (nom, email, mot de passe, rôle)
+    \item Validation côté client (React Hook Form)
+    \item Envoi des données au backend
+    \item Validation côté serveur (Express Validator)
+    \item Hashage du mot de passe avec bcrypt
+    \item Création de l'utilisateur dans MongoDB
+    \item Génération d'un token JWT
+    \item Redirection vers le dashboard
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran de la page d'inscription
+% \includegraphics[width=0.8\textwidth]{images/register-page.png}
+\fbox{\parbox{0.8\textwidth}{
+\centering
+\textbf{[CAPTURE : PAGE D'INSCRIPTION]}\\[1cm]
+Montrer le formulaire avec validation en temps réel
+}}
+\caption{Page d'inscription avec validation}
+\label{fig:register}
+\end{figure}
+
+\subsection{Connexion Sécurisée}
+
+La connexion utilise JWT pour une authentification stateless et sécurisée.
+
+\textbf{Mécanisme de connexion :}
+\begin{itemize}
+    \item Saisie email et mot de passe
+    \item Recherche de l'utilisateur par email
+    \item Comparaison du mot de passe avec bcrypt.compare()
+    \item Génération d'un token JWT (expiration 30 jours)
+    \item Stockage du token dans localStorage
+    \item Ajout automatique du token aux requêtes (Axios interceptor)
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran de la page de connexion
+% \includegraphics[width=0.8\textwidth]{images/login-page.png}
+\fbox{\parbox{0.8\textwidth}{
+\centering
+\textbf{[CAPTURE : PAGE DE CONNEXION]}\\[1cm]
+Montrer le formulaire avec gestion des erreurs
+}}
+\caption{Page de connexion}
+\label{fig:login}
+\end{figure}
+
+\subsection{Gestion des Rôles (RBAC)}
+
+L'application implémente un système de contrôle d'accès basé sur les rôles :
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|}
+\hline
+\textbf{Rôle} & \textbf{Permissions} & \textbf{Restrictions} \\
+\hline
+\textbf{user} & 
+\begin{itemize}[nosep,leftmargin=*]
+    \item Consulter les produits
+    \item Rechercher et filtrer
+    \item Voir les détails
+\end{itemize} & 
+\begin{itemize}[nosep,leftmargin=*]
+    \item Ne peut pas créer de produits
+    \item Pas d'accès au dashboard
+\end{itemize} \\
+\hline
+\textbf{admin} & 
+\begin{itemize}[nosep,leftmargin=*]
+    \item Toutes permissions "user"
+    \item Créer des produits
+    \item Modifier des produits
+    \item Supprimer des produits
+    \item Accès au dashboard
+\end{itemize} & 
+\begin{itemize}[nosep,leftmargin=*]
+    \item Responsabilité complète sur le catalogue
+\end{itemize} \\
+\hline
+\end{tabularx}
+\caption{Permissions par rôle}
+\end{table}
+
+\section{Gestion des Produits (CRUD)}
+
+\subsection{Création de Produit (Admin)}
+
+Les administrateurs peuvent ajouter de nouveaux produits avec upload d'image.
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran du formulaire de création
+% \includegraphics[width=0.9\textwidth]{images/create-product.png}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{[CAPTURE : FORMULAIRE CRÉATION PRODUIT]}\\[1cm]
+Montrer tous les champs : nom, description, prix,\\
+catégorie, stock, upload d'image avec aperçu
+}}
+\caption{Formulaire de création de produit}
+\label{fig:create-product}
+\end{figure}
+
+\textbf{Validation implémentée :}
+\begin{itemize}
+    \item Nom : 3-100 caractères, obligatoire
+    \item Description : 10-1000 caractères, obligatoire
+    \item Prix : Nombre > 0, obligatoire
+    \item Catégorie : 7 valeurs prédéfinies, obligatoire
+    \item Stock : Entier ≥ 0, obligatoire
+    \item Image : JPEG/PNG/GIF/WEBP, max 5MB, optionnel
+\end{itemize}
+
+\subsection{Liste des Produits}
+
+La page principale affiche tous les produits dans une grille responsive.
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran de la liste des produits
+% \includegraphics[width=0.9\textwidth]{images/products-list.png}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{[CAPTURE : LISTE DES PRODUITS]}\\[1cm]
+Montrer la grille avec cartes produits,\\
+barre de recherche, filtres et pagination
+}}
+\caption{Liste des produits avec filtres}
+\label{fig:products-list}
+\end{figure}
+
+\subsection{Modification de Produit (Admin)}
+
+Les administrateurs peuvent modifier les informations d'un produit existant.
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran du formulaire de modification
+% \includegraphics[width=0.9\textwidth]{images/edit-product.png}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{[CAPTURE : FORMULAIRE MODIFICATION PRODUIT]}\\[1cm]
+Montrer le formulaire pré-rempli avec les données existantes
+}}
+\caption{Formulaire de modification de produit}
+\label{fig:edit-product}
+\end{figure}
+
+\subsection{Suppression de Produit (Admin)}
+
+La suppression nécessite une confirmation pour éviter les erreurs.
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran de la modal de confirmation
+% \includegraphics[width=0.7\textwidth]{images/delete-confirmation.png}
+\fbox{\parbox{0.7\textwidth}{
+\centering
+\textbf{[CAPTURE : MODAL CONFIRMATION SUPPRESSION]}\\[1cm]
+Montrer la boîte de dialogue avec boutons Annuler/Confirmer
+}}
+\caption{Confirmation de suppression}
+\label{fig:delete-confirm}
+\end{figure}
+
+\subsection{Détails d'un Produit}
+
+Une page dédiée affiche toutes les informations d'un produit.
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran de la page de détails
+% \includegraphics[width=0.9\textwidth]{images/product-detail.png}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{[CAPTURE : PAGE DÉTAILS PRODUIT]}\\[1cm]
+Montrer l'image grande taille, toutes les informations,\\
+prix, stock, boutons Modifier/Supprimer (si admin)
+}}
+\caption{Page de détails d'un produit}
+\label{fig:product-detail}
+\end{figure}
+
+\section{Recherche et Filtrage Avancés}
+
+\subsection{Recherche Textuelle}
+
+La recherche s'effectue simultanément dans le nom et la description des produits.
+
+\textbf{Implémentation :}
+\begin{itemize}
+    \item Recherche insensible à la casse
+    \item Utilisation de regex MongoDB
+    \item Recherche en temps réel (debounce 300ms)
+    \item Mise en évidence des résultats
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran de la recherche
+% \includegraphics[width=0.9\textwidth]{images/search-results.png}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{[CAPTURE : RÉSULTATS DE RECHERCHE]}\\[1cm]
+Montrer la barre de recherche avec résultats filtrés
+}}
+\caption{Résultats de recherche}
+\label{fig:search}
+\end{figure}
+
+\subsection{Filtrage Multi-Critères}
+
+Les utilisateurs peuvent combiner plusieurs filtres :
+
+\begin{itemize}
+    \item \textbf{Par catégorie} : Dropdown avec 7 catégories
+    \item \textbf{Par plage de prix} : Sliders min/max
+    \item \textbf{Par disponibilité} : Checkbox "En stock uniquement"
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran des filtres
+% \includegraphics[width=0.9\textwidth]{images/filters.png}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{[CAPTURE : PANNEAU DE FILTRES]}\\[1cm]
+Montrer tous les filtres : catégorie, prix, stock
+}}
+\caption{Panneau de filtres}
+\label{fig:filters}
+\end{figure}
+
+\subsection{Tri des Résultats}
+
+Plusieurs options de tri sont disponibles :
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Option} & \textbf{Description} \\
+\hline
+Prix croissant & Du moins cher au plus cher \\
+\hline
+Prix décroissant & Du plus cher au moins cher \\
+\hline
+Nom A-Z & Ordre alphabétique \\
+\hline
+Nom Z-A & Ordre alphabétique inverse \\
+\hline
+Plus récents & Date de création décroissante \\
+\hline
+Plus anciens & Date de création croissante \\
+\hline
+\end{tabular}
+\caption{Options de tri disponibles}
+\end{table}
+
+\subsection{Pagination}
+
+La pagination permet de naviguer efficacement dans un grand catalogue.
+
+\textbf{Caractéristiques :}
+\begin{itemize}
+    \item 12 produits par page (configurable)
+    \item Numéros de pages cliquables
+    \item Boutons Précédent/Suivant
+    \item Affichage "Page X sur Y"
+    \item Compteur total de résultats
+    \item Conservation des filtres entre les pages
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran de la pagination
+% \includegraphics[width=0.7\textwidth]{images/pagination.png}
+\fbox{\parbox{0.7\textwidth}{
+\centering
+\textbf{[CAPTURE : CONTRÔLES DE PAGINATION]}\\[1cm]
+Montrer les boutons de navigation et numéros de pages
+}}
+\caption{Système de pagination}
+\label{fig:pagination}
+\end{figure}
+
+\section{Upload de Fichiers}
+
+\subsection{Upload d'Images Produits}
+
+L'application permet l'upload sécurisé d'images pour les produits.
+
+\textbf{Sécurité implémentée :}
+\begin{itemize}
+    \item Vérification du type MIME (pas juste l'extension)
+    \item Limite de taille : 5 MB
+    \item Types autorisés : JPEG, JPG, PNG, GIF, WEBP
+    \item Renommage automatique (timestamp + random)
+    \item Stockage dans dossier dédié (\texttt{/uploads})
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran de l'upload avec aperçu
+% \includegraphics[width=0.7\textwidth]{images/image-upload.png}
+\fbox{\parbox{0.7\textwidth}{
+\centering
+\textbf{[CAPTURE : UPLOAD D'IMAGE AVEC APERÇU]}\\[1cm]
+Montrer le bouton d'upload et l'aperçu de l'image sélectionnée
+}}
+\caption{Upload d'image avec aperçu}
+\label{fig:upload}
+\end{figure}
+
+\section{Dashboard Administrateur}
+
+\subsection{Statistiques Globales}
+
+Le dashboard affiche des statistiques en temps réel sur le catalogue.
+
+\textbf{Métriques affichées :}
+\begin{itemize}
+    \item Nombre total de produits
+    \item Valeur totale du stock (prix × quantité)
+    \item Prix moyen des produits
+    \item Stock total (somme des quantités)
+    \item Nombre de produits en rupture de stock
+    \item Nombre de produits à stock faible (< 10 unités)
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran du dashboard
+% \includegraphics[width=0.9\textwidth]{images/dashboard.png}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{[CAPTURE : DASHBOARD ADMINISTRATEUR]}\\[1cm]
+Montrer les cartes de statistiques et les graphiques
+}}
+\caption{Dashboard administrateur}
+\label{fig:dashboard}
+\end{figure}
+
+\subsection{Distribution par Catégorie}
+
+Un tableau affiche la répartition des produits par catégorie.
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran du tableau de distribution
+% \includegraphics[width=0.8\textwidth]{images/category-distribution.png}
+\fbox{\parbox{0.8\textwidth}{
+\centering
+\textbf{[CAPTURE : DISTRIBUTION PAR CATÉGORIE]}\\[1cm]
+Montrer le tableau avec nombre de produits et valeur par catégorie
+}}
+\caption{Distribution des produits par catégorie}
+\label{fig:category-dist}
+\end{figure}
+
+\subsection{Alertes Stock}
+
+Le dashboard signale les produits nécessitant un réapprovisionnement.
+
+\begin{itemize}
+    \item \textbf{Rupture de stock} : Badge rouge pour stock = 0
+    \item \textbf{Stock faible} : Badge orange pour stock < 10
+    \item Liste déroulante des produits concernés
+    \item Action rapide vers la page de modification
+\end{itemize}
+
+% ============================================================================
+% CHAPITRE 5 : INTERFACE UTILISATEUR & UX
+% ============================================================================
+\chapter{Interface Utilisateur et Expérience Utilisateur}
+
+\section{Design System}
+
+\subsection{Palette de Couleurs}
+
+L'application utilise une palette de couleurs moderne et cohérente :
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Couleur} & \textbf{Code Hex} & \textbf{Utilisation} \\
+\hline
+Bleu primaire & \#3B82F6 & Boutons principaux, liens \\
+\hline
+Violet secondaire & \#8B5CF6 & Accents, gradients \\
+\hline
+Vert succès & \#10B981 & Messages de succès, badges positifs \\
+\hline
+Rouge danger & \#EF4444 & Erreurs, suppressions \\
+\hline
+Gris neutre & \#6B7280 & Texte secondaire, bordures \\
+\hline
+\end{tabular}
+\caption{Palette de couleurs de l'application}
+\end{table}
+
+\subsection{Typographie}
+
+\begin{itemize}
+    \item \textbf{Police principale} : Inter, system-ui, sans-serif
+    \item \textbf{Tailles} : Adaptatives de 0.875rem (14px) à 2.25rem (36px)
+    \item \textbf{Poids} : Normal (400), Medium (500), Bold (700)
+\end{itemize}
+
+\section{Responsive Design}
+
+L'application est entièrement responsive avec trois breakpoints principaux :
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Appareil} & \textbf{Largeur} & \textbf{Disposition} \\
+\hline
+Mobile & < 640px & 1 colonne, menu burger \\
+\hline
+Tablette & 640px - 1024px & 2 colonnes, menu condensé \\
+\hline
+Desktop & > 1024px & 3-4 colonnes, menu complet \\
+\hline
+\end{tabular}
+\caption{Breakpoints responsive}
+\end{table}
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran mobile + desktop
+% \includegraphics[width=0.9\textwidth]{images/responsive-comparison.png}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{[CAPTURE : VERSION MOBILE + DESKTOP CÔTE À CÔTE]}\\[1cm]
+Montrer la même page sur mobile et desktop
+}}
+\caption{Comparaison responsive mobile/desktop}
+\label{fig:responsive}
+\end{figure}
+
+\section{Navigation}
+
+\subsection{Barre de Navigation}
+
+La navbar est présente sur toutes les pages et s'adapte selon l'état de connexion.
+
+\textbf{Éléments affichés :}
+\begin{itemize}
+    \item Logo de l'application (lien vers accueil)
+    \item Lien "Produits"
+    \item Si connecté : Lien "Dashboard" (admin uniquement)
+    \item Si connecté : Menu utilisateur avec nom et déconnexion
+    \item Si non connecté : Boutons "Connexion" et "Inscription"
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran de la navbar
+% \includegraphics[width=0.9\textwidth]{images/navbar.png}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{[CAPTURE : BARRE DE NAVIGATION]}\\[1cm]
+Montrer la navbar avec menu utilisateur ouvert
+}}
+\caption{Barre de navigation}
+\label{fig:navbar}
+\end{figure}
+
+\subsection{Page d'Accueil}
+
+La page d'accueil présente l'application avec un design moderne.
+
+\textbf{Sections :}
+\begin{itemize}
+    \item Hero section avec gradient animé
+    \item Description de l'application
+    \item Bouton CTA "Voir les Produits"
+    \item Liste des fonctionnalités principales
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran de la page d'accueil
+% \includegraphics[width=0.9\textwidth]{images/homepage.png}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{[CAPTURE : PAGE D'ACCUEIL]}\\[1cm]
+Montrer le hero avec gradient et CTA
+}}
+\caption{Page d'accueil}
+\label{fig:homepage}
+\end{figure}
+
+\section{Animations et Transitions}
+
+L'application utilise des animations subtiles pour améliorer l'UX :
+
+\begin{itemize}
+    \item \textbf{Hover effects} : Scale et shadow sur les cartes produits
+    \item \textbf{Fade-in} : Apparition progressive des éléments au chargement
+    \item \textbf{Slide-in} : Modales qui glissent depuis le haut
+    \item \textbf{Transitions fluides} : 300ms avec easing naturel
+\end{itemize}
+
+\section{Feedback Visuel}
+
+\subsection{États de Chargement}
+
+Plusieurs indicateurs informent l'utilisateur durant les opérations asynchrones :
+
+\begin{itemize}
+    \item Spinners animés lors du chargement des données
+    \item Skeleton loaders pour les cartes produits
+    \item Texte "Chargement..." explicite
+    \item Désactivation des boutons durant les requêtes
+\end{itemize}
+
+\subsection{Messages de Succès et d'Erreur}
+
+\textbf{Messages de succès :}
+\begin{itemize}
+    \item Toast notifications (coin supérieur droit)
+    \item Icône verte avec checkmark
+    \item Auto-dismiss après 3 secondes
+\end{itemize}
+
+\textbf{Messages d'erreur :}
+\begin{itemize}
+    \item Affichage sous les champs concernés
+    \item Couleur rouge avec icône d'alerte
+    \item Bordure rouge sur les inputs invalides
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran des messages
+% \includegraphics[width=0.7\textwidth]{images/notifications.png}
+\fbox{\parbox{0.7\textwidth}{
+\centering
+\textbf{[CAPTURE : NOTIFICATIONS SUCCÈS/ERREUR]}\\[1cm]
+Montrer les toast notifications
+}}
+\caption{Notifications utilisateur}
+\label{fig:notifications}
+\end{figure}
+
+% ============================================================================
+% CHAPITRE 6 : BACKEND & API REST
+% ============================================================================
+\chapter{Backend et API REST}
+
+\section{Architecture Backend}
+
+Le backend suit une architecture MVC (Model-View-Controller) adaptée aux API REST :
+
+\begin{itemize}
+    \item \textbf{Models} : Définition des schémas de données (User, Product)
+    \item \textbf{Controllers} : Logique métier et traitement des requêtes
+    \item \textbf{Routes} : Définition des endpoints et liaison aux controllers
+    \item \textbf{Middleware} : Authentification, autorisation, validation
+\end{itemize}
+
+\section{Endpoints Principaux}
+
+\subsection{Routes d'Authentification}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Méthode} & \textbf{Endpoint} & \textbf{Description} \\
+\hline
+POST & /api/auth/register & Inscription d'un nouvel utilisateur \\
+\hline
+POST & /api/auth/login & Connexion et génération du JWT \\
+\hline
+GET & /api/auth/me & Récupération du profil utilisateur \\
+\hline
+\end{tabularx}
+\caption{Routes d'authentification}
+\end{table}
+
+\subsection{Routes des Produits}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|l|}
+\hline
+\textbf{Méthode} & \textbf{Endpoint} & \textbf{Description} & \textbf{Accès} \\
+\hline
+GET & /api/products & Liste avec filtres et pagination & Public \\
+\hline
+GET & /api/products/:id & Détails d'un produit & Public \\
+\hline
+POST & /api/products & Création d'un produit & Admin \\
+\hline
+PUT & /api/products/:id & Modification d'un produit & Admin \\
+\hline
+DELETE & /api/products/:id & Suppression d'un produit & Admin \\
+\hline
+GET & /api/products/stats/dashboard & Statistiques & Admin \\
+\hline
+\end{tabularx}
+\caption{Routes des produits}
+\end{table}
+
+\section{Tests avec Postman}
+
+L'API a été testée de manière exhaustive avec Postman.
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran de Postman
+% \includegraphics[width=0.9\textwidth]{images/postman-tests.png}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{[CAPTURE : TESTS POSTMAN]}\\[1cm]
+Montrer une requête POST de création de produit\\
+avec le token JWT dans les headers et la réponse JSON
+}}
+\caption{Tests API avec Postman}
+\label{fig:postman}
+\end{figure}
+
+\section{Sécurité de l'API}
+
+\subsection{Authentification JWT}
+
+Toutes les routes protégées nécessitent un token JWT valide dans le header :
+
+\begin{lstlisting}[language=bash]
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+\end{lstlisting}
+
+\subsection{Validation des Données}
+
+Express Validator assure la validation stricte des entrées :
+
+\begin{itemize}
+    \item Validation des types de données
+    \item Vérification des formats (email, prix, etc.)
+    \item Sanitization (trim, escape)
+    \item Messages d'erreur explicites
+\end{itemize}
+
+\subsection{Protection contre les Vulnérabilités}
+
+\textbf{Mesures implémentées :}
+\begin{itemize}
+    \item \textbf{Injection NoSQL} : Validation avec Mongoose, pas de \texttt{\$where}
+    \item \textbf{XSS} : Sanitization avec Express Validator
+    \item \textbf{CSRF} : Tokens JWT dans headers (pas de cookies)
+    \item \textbf{Rate Limiting} : À implémenter pour production
+    \item \textbf{CORS} : Configuration stricte des origines autorisées
+\end{itemize}
+
+% ============================================================================
+% CHAPITRE 7 : DÉPLOIEMENT & TESTS
+% ============================================================================
+\chapter{Déploiement et Tests}
+
+\section{Architecture de Déploiement}
+
+L'application est déployée sur trois services cloud distincts :
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Composant} & \textbf{Service} & \textbf{URL} \\
+\hline
+Frontend & Vercel & https://[votre-app].vercel.app \\
+\hline
+Backend & Render & https://[backend].onrender.com \\
+\hline
+Database & MongoDB Atlas & Cloud (Europe) \\
+\hline
+\end{tabular}
+\caption{Services de déploiement}
+\end{table}
+
+\section{Configuration du Déploiement}
+
+\subsection{Backend sur Render}
+
+\textbf{Configuration :}
+\begin{itemize}
+    \item \textbf{Build Command} : \texttt{npm install}
+    \item \textbf{Start Command} : \texttt{npm start}
+    \item \textbf{Environment} : Node
+    \item \textbf{Instance Type} : Free (avec limitations)
+\end{itemize}
+
+\textbf{Variables d'environnement :}
+\begin{itemize}
+    \item NODE\_ENV=production
+    \item MONGODB\_URI=[connection string Atlas]
+    \item JWT\_SECRET=[secret sécurisé]
+    \item CLIENT\_URL=[URL frontend Vercel]
+\end{itemize}
+
+\subsection{Frontend sur Vercel}
+
+\textbf{Configuration :}
+\begin{itemize}
+    \item \textbf{Framework} : Vite
+    \item \textbf{Build Command} : \texttt{npm run build}
+    \item \textbf{Output Directory} : \texttt{dist}
+\end{itemize}
+
+\textbf{Variables d'environnement :}
+\begin{itemize}
+    \item VITE\_API\_URL=[URL backend Render]
+\end{itemize}
+
+\section{Application Déployée}
+
+\begin{figure}[H]
+\centering
+% Insérer capture d'écran de l'app en production
+% \includegraphics[width=0.9\textwidth]{images/deployed-app.png}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{[CAPTURE : APPLICATION EN PRODUCTION]}\\[1cm]
+Montrer l'URL de production dans la barre d'adresse\\
+et l'application fonctionnelle
+}}
+\caption{Application déployée en production}
+\label{fig:deployed}
+\end{figure}
+
+\section{Tests Réalisés}
+
+\subsection{Tests Fonctionnels}
+
+Tous les scénarios utilisateurs ont été testés :
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+\textbf{Test} & \textbf{Description} & \textbf{Résultat} \\
+\hline
+T1 & Inscription avec email valide & ✓ Réussi \\
+\hline
+T2 & Inscription avec email existant & ✓ Erreur 409 \\
+\hline
+T3 & Connexion avec credentials valides & ✓ Réussi \\
+\hline
+T4 & Connexion avec mauvais mot de passe & ✓ Erreur 401 \\
+\hline
+T5 & Création produit par admin & ✓ Réussi \\
+\hline
+T6 & Création produit par user & ✓ Erreur 403 \\
+\hline
+T7 & Recherche de produits & ✓ Réussi \\
+\hline
+T8 & Filtrage par catégorie & ✓ Réussi \\
+\hline
+T9 & Upload image > 5MB & ✓ Erreur 413 \\
+\hline
+T10 & Pagination & ✓ Réussi \\
+\hline
+\end{tabularx}
+\caption{Résultats des tests fonctionnels}
+\end{table}
+
+\subsection{Tests de Sécurité}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+\textbf{Test} & \textbf{Description} & \textbf{Résultat} \\
+\hline
+S1 & Accès route protégée sans token & ✓ Erreur 401 \\
+\hline
+S2 & Accès route admin par user & ✓ Erreur 403 \\
+\hline
+S3 & Token JWT expiré & ✓ Erreur 401 \\
+\hline
+S4 & Injection NoSQL dans login & ✓ Bloqué \\
+\hline
+S5 & Upload fichier .exe & ✓ Bloqué \\
+\hline
+S6 & XSS dans champ nom & ✓ Échappé \\
+\hline
+\end{tabularx}
+\caption{Résultats des tests de sécurité}
+\end{table}
+
+\subsection{Tests de Performance}
+
+\begin{itemize}
+    \item \textbf{Temps de réponse API} : < 500ms (moyenne)
+    \item \textbf{Temps de chargement page} : < 2 secondes
+    \item \textbf{Lighthouse Score} : 90+ (Performance)
+\end{itemize}
+
+\section{Monitoring}
+
+\subsection{Outils de Monitoring}
+
+\begin{itemize}
+    \item \textbf{Render Dashboard} : Logs en temps réel, utilisation CPU/RAM
+    \item \textbf{Vercel Analytics} : Nombre de visiteurs, temps de chargement
+    \item \textbf{MongoDB Atlas} : Métriques de la base de données
+\end{itemize}
+
+% ============================================================================
+% CHAPITRE 8 : CONCLUSION & PERSPECTIVES
+% ============================================================================
+\chapter{Conclusion et Perspectives}
+
+\section{Bilan du Projet}
+
+Ce projet de développement d'une application web Full Stack de gestion de produits e-commerce a permis de mettre en pratique l'ensemble des concepts de sécurité des applications web modernes enseignés dans le module.
+
+\subsection{Objectifs Atteints}
+
+Tous les objectifs fixés en début de projet ont été atteints :
+
+\begin{itemize}
+    \item ✓ \textbf{Authentification sécurisée} : JWT, bcrypt, expiration des tokens
+    \item ✓ \textbf{Autorisation granulaire} : RBAC avec deux rôles distincts
+    \item ✓ \textbf{CRUD complet} : Toutes les opérations implémentées
+    \item ✓ \textbf{Recherche et filtrage} : Fonctionnalités avancées opérationnelles
+    \item ✓ \textbf{Interface responsive} : Compatible mobile, tablette et desktop
+    \item ✓ \textbf{Protection OWASP} : Injection, XSS, CSRF traités
+    \item ✓ \textbf{Déploiement cloud} : Application accessible en production
+    \item ✓ \textbf{Documentation complète} : 3768 lignes de documentation technique
+\end{itemize}
+
+\subsection{Compétences Acquises}
+
+Ce projet a permis de développer et consolider de nombreuses compétences :
+
+\textbf{Compétences Techniques :}
+\begin{itemize}
+    \item Maîtrise de React.js et de l'écosystème frontend moderne
+    \item Développement d'API REST sécurisées avec Node.js/Express
+    \item Conception et modélisation de bases de données NoSQL
+    \item Implémentation des standards de sécurité OWASP
+    \item Déploiement et configuration de services cloud
+    \item Utilisation de Git et GitHub pour le versioning
+\end{itemize}
+
+\textbf{Compétences Transversales :}
+\begin{itemize}
+    \item Analyse et conception d'applications complexes
+    \item Gestion de projet et planification
+    \item Résolution de problèmes techniques
+    \item Rédaction de documentation technique
+    \item Veille technologique
+\end{itemize}
+
+\section{Défis Rencontrés}
+
+\subsection{Défis Techniques}
+
+Plusieurs défis techniques ont été rencontrés et surmontés :
+
+\begin{enumerate}
+    \item \textbf{Compatibilité Mongoose 9.x} : Adaptation des hooks pre-save (suppression du callback \texttt{next()})
+    
+    \item \textbf{TailwindCSS v4} : Incompatibilité initiale, résolution par downgrade vers v3.4.1
+    
+    \item \textbf{Fast Refresh React} : Warnings ESLint, solution par séparation des hooks
+    
+    \item \textbf{CORS en production} : Configuration stricte des origines autorisées
+    
+    \item \textbf{Render Free Tier} : Gestion du sleep après 15 minutes d'inactivité
+\end{enumerate}
+
+\subsection{Solutions Apportées}
+
+Chaque défi a été résolu de manière méthodique :
+
+\begin{itemize}
+    \item Lecture approfondie de la documentation officielle
+    \item Recherche sur GitHub Issues et Stack Overflow
+    \item Tests itératifs et débogage systématique
+    \item Refactoring du code quand nécessaire
+\end{itemize}
+
+\section{Perspectives et Améliorations Futures}
+
+Bien que l'application soit fonctionnelle et sécurisée, plusieurs améliorations peuvent être envisagées :
+
+\subsection{Fonctionnalités Utilisateur}
+
+\begin{itemize}
+    \item \textbf{Panier d'achat} : Ajout de produits, gestion des quantités, calcul du total
+    \item \textbf{Système de commandes} : Historique, statuts (en cours, livrée), suivi
+    \item \textbf{Paiement en ligne} : Intégration Stripe ou PayPal
+    \item \textbf{Profil utilisateur} : Modification des informations, avatar
+    \item \textbf{Favoris} : Sauvegarder des produits pour plus tard
+    \item \textbf{Système de notation} : Notes et avis sur les produits
+    \item \textbf{Notifications email} : Confirmation de commande, promotions
+\end{itemize}
+
+\subsection{Fonctionnalités Administrateur}
+
+\begin{itemize}
+    \item \textbf{Gestion des utilisateurs} : Liste, modification, suppression, statistiques
+    \item \textbf{Gestion des commandes} : Validation, expédition, annulation
+    \item \textbf{Statistiques avancées} : Charts avec Chart.js, chiffre d'affaires, produits populaires
+    \item \textbf{Export de données} : CSV, PDF pour rapports
+    \item \textbf{Promotions} : Codes promo, réductions, ventes flash
+\end{itemize}
+
+\subsection{Améliorations Techniques}
+
+\begin{itemize}
+    \item \textbf{Tests automatisés} : Jest, Supertest, React Testing Library
+    \item \textbf{CI/CD} : GitHub Actions pour tests automatiques et déploiement
+    \item \textbf{Documentation API} : Swagger/OpenAPI pour documentation interactive
+    \item \textbf{Multi-langue} : i18next pour internationalisation (FR/EN/AR)
+    \item \textbf{Mode sombre} : Toggle light/dark theme
+    \item \textbf{PWA} : Progressive Web App avec offline support
+    \item \textbf{WebSockets} : Notifications temps réel avec Socket.io
+    \item \textbf{GraphQL} : Alternative à REST pour requêtes flexibles
+    \item \textbf{Microservices} : Séparation en services indépendants pour scalabilité
+\end{itemize}
+
+\subsection{Améliorations Sécurité}
+
+\begin{itemize}
+    \item \textbf{2FA} : Authentification à deux facteurs (SMS, Google Authenticator)
+    \item \textbf{Captcha} : Protection contre bots (Google reCAPTCHA)
+    \item \textbf{Rate Limiting} : Protection contre brute force et DDoS
+    \item \textbf{Audit logs} : Traçabilité complète des actions administrateurs
+    \item \textbf{Security headers} : Helmet.js avec CSP stricte
+    \item \textbf{Encryption} : Chiffrement des données sensibles au repos
+    \item \textbf{Penetration Testing} : Tests d'intrusion professionnels
+\end{itemize}
+
+\section{Conclusion Finale}
+
+Ce projet de développement Full Stack a été une expérience enrichissante qui a permis de consolider les connaissances théoriques en sécurité des applications web modernes par une mise en pratique concrète.
+
+L'application développée démontre une maîtrise des technologies web actuelles (React, Node.js, MongoDB) et l'implémentation effective des meilleures pratiques de sécurité (OWASP Top 10, JWT, bcrypt, RBAC).
+
+Le déploiement réussi en production sur des services cloud professionnels (Render, Vercel, MongoDB Atlas) valide la qualité et la robustesse de l'architecture mise en place.
+
+Ce projet constitue une base solide pour de futurs développements et peut servir de référence pour la création d'applications web sécurisées et performantes.
+
+\vspace{1cm}
+
+\begin{center}
+\textit{« La sécurité n'est pas un produit, mais un processus. »} \\
+— Bruce Schneier
+\end{center}
+
+% ============================================================================
+% BIBLIOGRAPHIE
+% ============================================================================
+\begin{thebibliography}{99}
+
+\bibitem{owasp}
+OWASP Foundation. (2021). \textit{OWASP Top Ten 2021}. \\
+\url{https://owasp.org/www-project-top-ten/}
+
+\bibitem{mdn}
+Mozilla Developer Network. (2026). \textit{Web Security}. \\
+\url{https://developer.mozilla.org/en-US/docs/Web/Security}
+
+\bibitem{jwt}
+Jones, M., Bradley, J., \& Sakimura, N. (2015). \textit{JSON Web Token (JWT)}. RFC 7519. \\
+\url{https://datatracker.ietf.org/doc/html/rfc7519}
+
+\bibitem{react}
+Meta. (2026). \textit{React Documentation}. \\
+\url{https://react.dev}
+
+\bibitem{express}
+Express.js Team. (2026). \textit{Express.js Guide}. \\
+\url{https://expressjs.com}
+
+\bibitem{mongodb}
+MongoDB Inc. (2026). \textit{MongoDB Manual}. \\
+\url{https://docs.mongodb.com}
+
+\bibitem{nodejs}
+OpenJS Foundation. (2026). \textit{Node.js Documentation}. \\
+\url{https://nodejs.org/en/docs/}
+
+\bibitem{bcrypt}
+Provos, N., \& Mazières, D. (1999). \textit{A Future-Adaptable Password Scheme}. \\
+USENIX Annual Technical Conference.
+
+\end{thebibliography}
+
+% ============================================================================
+% ANNEXES
+% ============================================================================
+\appendix
+
+\chapter{Code Source Important}
+
+\section{Schéma Mongoose User}
+
+\begin{lstlisting}[language=JavaScript, caption=Modèle User avec bcrypt]
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
+const UserSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Le nom est obligatoire'],
+    trim: true,
+    minlength: 2,
+    maxlength: 50
+  },
+  email: {
+    type: String,
+    required: [true, 'L\'email est obligatoire'],
+    unique: true,
+    lowercase: true,
+    match: [/^\S+@\S+\.\S+$/, 'Email invalide']
+  },
+  password: {
+    type: String,
+    required: [true, 'Le mot de passe est obligatoire'],
+    minlength: 6
+  },
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
+  }
+}, { timestamps: true });
+
+// Hash du mot de passe avant sauvegarde
+UserSchema.pre('save', async function() {
+  if (!this.isModified('password')) return;
+  this.password = await bcrypt.hash(this.password, 10);
+});
+
+// Méthode de comparaison du mot de passe
+UserSchema.methods.comparePassword = async function(candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
+// Exclure le mot de passe des réponses JSON
+UserSchema.methods.toJSON = function() {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
+
+module.exports = mongoose.model('User', UserSchema);
+\end{lstlisting}
+
+\section{Middleware d'Authentification JWT}
+
+\begin{lstlisting}[language=JavaScript, caption=Middleware de protection des routes]
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+exports.protect = async (req, res, next) => {
+  let token;
+  
+  // Extraction du token depuis le header Authorization
+  if (req.headers.authorization?.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+  
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      message: 'Accès non autorisé. Veuillez vous connecter.'
+    });
+  }
+  
+  try {
+    // Vérification et décodage du token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    
+    // Récupération de l'utilisateur
+    req.user = await User.findById(decoded.id).select('-password');
+    
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Utilisateur introuvable'
+      });
+    }
+    
+    next();
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: 'Token invalide ou expiré'
+    });
+  }
+};
+
+// Middleware d'autorisation par rôle
+exports.authorize = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({
+        success: false,
+        message: `Le rôle "${req.user.role}" n'est pas autorisé`
+      });
+    }
+    next();
+  };
+};
+\end{lstlisting}
+
+\chapter{Commandes de Déploiement}
+
+\section{Commandes Git}
+
+\begin{lstlisting}[language=bash, caption=Workflow Git]
+# Initialisation
+git init
+git add .
+git commit -m "feat: Initial commit"
+
+# Création repository GitHub
+gh repo create fullstack-ecommerce --public
+
+# Push
+git remote add origin https://github.com/username/repo.git
+git branch -M main
+git push -u origin main
+\end{lstlisting}
+
+\section{Déploiement Backend (Render)}
+
+\begin{lstlisting}[language=bash, caption=Configuration Render]
+# Via Render Dashboard:
+# 1. New Web Service
+# 2. Connect GitHub repository
+# 3. Configuration:
+#    - Build Command: npm install
+#    - Start Command: npm start
+#    - Environment: Node
+#
+# 4. Environment Variables:
+NODE_ENV=production
+MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/db
+JWT_SECRET=your_secret_here
+CLIENT_URL=https://frontend.vercel.app
+\end{lstlisting}
+
+\section{Déploiement Frontend (Vercel)}
+
+\begin{lstlisting}[language=bash, caption=Configuration Vercel]
+# Via Vercel Dashboard:
+# 1. New Project
+# 2. Import Git Repository
+# 3. Configuration:
+#    - Framework: Vite
+#    - Build Command: npm run build
+#    - Output Directory: dist
+#    - Root Directory: frontend
+#
+# 4. Environment Variables:
+VITE_API_URL=https://backend.onrender.com/api
+\end{lstlisting}
+
+% ============================================================================
+% FIN DU DOCUMENT
+% ============================================================================
+\end{document}

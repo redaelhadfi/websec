@@ -1,0 +1,109 @@
+\babel@toc {french}{}\relax 
+\contentsline {chapter}{Remerciements}{1}{chapter*.1}%
+\contentsline {chapter}{Résumé}{2}{chapter*.2}%
+\contentsline {chapter}{\numberline {1}Introduction et Contexte}{7}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Présentation du Projet}{7}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Problématique}{7}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Objectifs du Projet}{7}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Cahier des Charges Résumé}{8}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Exigences Fonctionnelles}{8}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Exigences Non-Fonctionnelles}{8}{subsection.1.4.2}%
+\contentsline {section}{\numberline {1.5}Méthodologie de Travail}{8}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Analyse et Conception}{9}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Analyse des Besoins}{9}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Besoins Fonctionnels}{9}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Identification des Acteurs}{9}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Diagramme de Cas d'Utilisation}{9}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Modélisation de la Base de Données}{10}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Schéma Relationnel}{10}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Description des Collections}{10}{subsection.2.3.2}%
+\contentsline {subsubsection}{Collection Users}{10}{subsection.2.3.2}%
+\contentsline {subsubsection}{Collection Products}{11}{table.caption.8}%
+\contentsline {section}{\numberline {2.4}Contraintes de Sécurité}{11}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Architecture et Technologies}{12}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Architecture Globale}{12}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Tier 1 : Couche Présentation (Frontend)}{12}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Tier 2 : Couche Logique Métier (Backend)}{12}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Tier 3 : Couche Données (Database)}{13}{subsection.3.1.3}%
+\contentsline {section}{\numberline {3.2}Stack Technologique}{13}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Justification des Choix}{13}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Avantages de l'Architecture Choisie}{13}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Structure du Code}{14}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Structure Backend}{14}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Structure Frontend}{14}{subsection.3.3.2}%
+\contentsline {chapter}{\numberline {4}Fonctionnalités Détaillées}{16}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Authentification et Autorisation}{16}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Inscription des Utilisateurs}{16}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Connexion Sécurisée}{16}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Gestion des Rôles (RBAC)}{17}{subsection.4.1.3}%
+\contentsline {section}{\numberline {4.2}Gestion des Produits (CRUD)}{17}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Création de Produit (Admin)}{17}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Liste des Produits}{18}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Modification de Produit (Admin)}{18}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Suppression de Produit (Admin)}{18}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Détails d'un Produit}{18}{subsection.4.2.5}%
+\contentsline {section}{\numberline {4.3}Recherche et Filtrage Avancés}{19}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Recherche Textuelle}{19}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Filtrage Multi-Critères}{19}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Tri des Résultats}{19}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Pagination}{20}{subsection.4.3.4}%
+\contentsline {section}{\numberline {4.4}Upload de Fichiers}{20}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Upload d'Images Produits}{20}{subsection.4.4.1}%
+\contentsline {section}{\numberline {4.5}Dashboard Administrateur}{20}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Statistiques Globales}{20}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Distribution par Catégorie}{21}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Alertes Stock}{21}{subsection.4.5.3}%
+\contentsline {chapter}{\numberline {5}Interface Utilisateur et Expérience Utilisateur}{22}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Design System}{22}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Palette de Couleurs}{22}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Typographie}{22}{subsection.5.1.2}%
+\contentsline {section}{\numberline {5.2}Responsive Design}{22}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Navigation}{23}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Barre de Navigation}{23}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Page d'Accueil}{23}{subsection.5.3.2}%
+\contentsline {section}{\numberline {5.4}Animations et Transitions}{23}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Feedback Visuel}{24}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}États de Chargement}{24}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Messages de Succès et d'Erreur}{24}{subsection.5.5.2}%
+\contentsline {chapter}{\numberline {6}Backend et API REST}{25}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Architecture Backend}{25}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Endpoints Principaux}{25}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Routes d'Authentification}{25}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Routes des Produits}{25}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}Tests avec Postman}{25}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Sécurité de l'API}{26}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Authentification JWT}{26}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Validation des Données}{26}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Protection contre les Vulnérabilités}{26}{subsection.6.4.3}%
+\contentsline {chapter}{\numberline {7}Déploiement et Tests}{27}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Architecture de Déploiement}{27}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Configuration du Déploiement}{27}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}Backend sur Render}{27}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}Frontend sur Vercel}{27}{subsection.7.2.2}%
+\contentsline {section}{\numberline {7.3}Application Déployée}{28}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Tests Réalisés}{28}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Tests Fonctionnels}{28}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}Tests de Sécurité}{28}{subsection.7.4.2}%
+\contentsline {subsection}{\numberline {7.4.3}Tests de Performance}{28}{subsection.7.4.3}%
+\contentsline {section}{\numberline {7.5}Monitoring}{29}{section.7.5}%
+\contentsline {subsection}{\numberline {7.5.1}Outils de Monitoring}{29}{subsection.7.5.1}%
+\contentsline {chapter}{\numberline {8}Conclusion et Perspectives}{30}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Bilan du Projet}{30}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Objectifs Atteints}{30}{subsection.8.1.1}%
+\contentsline {subsection}{\numberline {8.1.2}Compétences Acquises}{30}{subsection.8.1.2}%
+\contentsline {section}{\numberline {8.2}Défis Rencontrés}{31}{section.8.2}%
+\contentsline {subsection}{\numberline {8.2.1}Défis Techniques}{31}{subsection.8.2.1}%
+\contentsline {subsection}{\numberline {8.2.2}Solutions Apportées}{31}{subsection.8.2.2}%
+\contentsline {section}{\numberline {8.3}Perspectives et Améliorations Futures}{31}{section.8.3}%
+\contentsline {subsection}{\numberline {8.3.1}Fonctionnalités Utilisateur}{31}{subsection.8.3.1}%
+\contentsline {subsection}{\numberline {8.3.2}Fonctionnalités Administrateur}{31}{subsection.8.3.2}%
+\contentsline {subsection}{\numberline {8.3.3}Améliorations Techniques}{32}{subsection.8.3.3}%
+\contentsline {subsection}{\numberline {8.3.4}Améliorations Sécurité}{32}{subsection.8.3.4}%
+\contentsline {section}{\numberline {8.4}Conclusion Finale}{32}{section.8.4}%
+\contentsline {chapter}{\numberline {A}Code Source Important}{34}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Schéma Mongoose User}{34}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Middleware d'Authentification JWT}{35}{section.A.2}%
+\contentsline {chapter}{\numberline {B}Commandes de Déploiement}{37}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Commandes Git}{37}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Déploiement Backend (Render)}{37}{section.B.2}%
+\contentsline {section}{\numberline {B.3}Déploiement Frontend (Vercel)}{37}{section.B.3}%
