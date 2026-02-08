@@ -40,8 +40,12 @@ const AuthProvider = ({ children }) => {
       const response = await axios.post('/api/auth/register', { name, email, password });
       const { token, user } = response.data.data;
       
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      try {
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+      } catch (error) {
+        console.warn('localStorage not available:', error);
+      }
       setUser(user);
       
       return { success: true };
@@ -54,8 +58,12 @@ const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    try {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    } catch (error) {
+      console.warn('localStorage not available:', error);
+    }
     setUser(null);
   };
 
