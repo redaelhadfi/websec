@@ -11,6 +11,7 @@ const ProductForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [imagePreview, setImagePreview] = useState('');
+  const [imageFile, setImageFile] = useState(null);
 
   const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm({
     defaultValues: {
@@ -51,6 +52,7 @@ const ProductForm = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
@@ -72,7 +74,6 @@ const ProductForm = () => {
       formData.append('stock', data.stock);
       formData.append('featured', data.featured);
 
-      const imageFile = watch('image')?.[0];
       if (imageFile) {
         formData.append('image', imageFile);
       }
