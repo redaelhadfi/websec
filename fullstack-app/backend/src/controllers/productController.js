@@ -101,7 +101,9 @@ exports.createProduct = async (req, res) => {
 
     let imageUrl = 'https://via.placeholder.com/400x400?text=No+Image';
     if (req.file) {
-      imageUrl = `/uploads/${req.file.filename}`;
+      // Convert image to base64
+      const base64 = req.file.buffer.toString('base64');
+      imageUrl = `data:${req.file.mimetype};base64,${base64}`;
     }
 
     const product = await Product.create({
@@ -151,7 +153,9 @@ exports.updateProduct = async (req, res) => {
 
     // Update image if new file uploaded
     if (req.file) {
-      product.image = `/uploads/${req.file.filename}`;
+      // Convert image to base64
+      const base64 = req.file.buffer.toString('base64');
+      product.image = `data:${req.file.mimetype};base64,${base64}`;
     }
 
     await product.save();
