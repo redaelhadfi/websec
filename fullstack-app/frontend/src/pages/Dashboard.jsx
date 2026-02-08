@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../utils/axios';
+import categoryLabels from '../utils/categoryLabels';
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
@@ -18,7 +19,7 @@ const Dashboard = () => {
       setStats(response.data.data);
       setError('');
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to fetch statistics');
+      setError(err.response?.data?.message || 'Échec du chargement des statistiques');
     } finally {
       setLoading(false);
     }
@@ -45,17 +46,17 @@ const Dashboard = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-10">
-        <h1 className="text-4xl font-extrabold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Admin Dashboard</h1>
-        <p className="text-gray-600 text-lg">Monitor your e-commerce store performance</p>
+        <h1 className="text-4xl font-extrabold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Tableau de Bord Admin</h1>
+        <p className="text-gray-600 text-lg">Suivez les performances de votre boutique en ligne</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <div className="bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-2xl shadow-xl p-8 transform hover:scale-105 transition-all duration-300 hover:shadow-2xl">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-blue-100 text-sm font-medium mb-2">Total Products</p>
+              <p className="text-blue-100 text-sm font-medium mb-2">Total Produits</p>
               <p className="text-5xl font-black">{stats?.totalProducts || 0}</p>
-              <p className="text-blue-200 text-xs mt-2">📦 In inventory</p>
+              <p className="text-blue-200 text-xs mt-2">En inventaire</p>
             </div>
             <div className="bg-white bg-opacity-20 p-4 rounded-xl">
               <svg className="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,9 +69,9 @@ const Dashboard = () => {
         <div className="bg-gradient-to-br from-green-500 to-green-700 text-white rounded-2xl shadow-xl p-8 transform hover:scale-105 transition-all duration-300 hover:shadow-2xl">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-green-100 text-sm font-medium mb-2">Total Users</p>
+              <p className="text-green-100 text-sm font-medium mb-2">Total Utilisateurs</p>
               <p className="text-5xl font-black">{stats?.totalUsers || 0}</p>
-              <p className="text-green-200 text-xs mt-2">👥 Registered</p>
+              <p className="text-green-200 text-xs mt-2">Inscrits</p>
             </div>
             <div className="bg-white bg-opacity-20 p-4 rounded-xl">
               <svg className="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,9 +84,9 @@ const Dashboard = () => {
         <div className="bg-gradient-to-br from-purple-500 to-purple-700 text-white rounded-2xl shadow-xl p-8 transform hover:scale-105 transition-all duration-300 hover:shadow-2xl">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-purple-100 text-sm font-medium mb-2">Categories</p>
+              <p className="text-purple-100 text-sm font-medium mb-2">Catégories</p>
               <p className="text-5xl font-black">{stats?.categoryCounts?.length || 0}</p>
-              <p className="text-purple-200 text-xs mt-2">🏷️ Active</p>
+              <p className="text-purple-200 text-xs mt-2">Actives</p>
             </div>
             <div className="bg-white bg-opacity-20 p-4 rounded-xl">
               <svg className="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,13 +105,13 @@ const Dashboard = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-gray-800">Products by Category</h2>
+            <h2 className="text-2xl font-bold text-gray-800">Produits par Catégorie</h2>
           </div>
           <div className="space-y-4">
             {stats?.categoryCounts?.map((cat, index) => (
               <div key={cat._id} className="group hover:bg-gray-50 p-3 rounded-xl transition-colors">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-bold text-gray-800 text-lg">{cat._id}</span>
+                  <span className="font-bold text-gray-800 text-lg">{categoryLabels[cat._id] || cat._id}</span>
                   <span className="font-bold text-blue-600 text-lg">{cat.count}</span>
                 </div>
                 <div className="flex-1">
@@ -136,7 +137,7 @@ const Dashboard = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-red-700">Low Stock Alert</h2>
+            <h2 className="text-2xl font-bold text-red-700">Alerte Stock Faible</h2>
           </div>
           {stats?.lowStockProducts?.length > 0 ? (
             <div className="space-y-3">
@@ -145,7 +146,7 @@ const Dashboard = () => {
                   <span className="font-bold text-gray-800">{product.name}</span>
                   <div className="flex items-center">
                     <span className="bg-red-500 text-white px-3 py-1 rounded-full font-bold text-sm">
-                      ⚠️ {product.stock} left
+                      {product.stock} restant(s)
                     </span>
                   </div>
                 </div>
@@ -153,9 +154,8 @@ const Dashboard = () => {
             </div>
           ) : (
             <div className="text-center py-8">
-              <div className="text-6xl mb-4">🎉</div>
-              <p className="text-gray-700 font-semibold text-lg">All products are well stocked!</p>
-              <p className="text-gray-500 mt-2">No action needed</p>
+              <p className="text-gray-700 font-semibold text-lg">Tous les produits sont bien approvisionnés !</p>
+              <p className="text-gray-500 mt-2">Aucune action requise</p>
             </div>
           )}
         </div>
@@ -169,24 +169,24 @@ const Dashboard = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-gray-800">Recent Products</h2>
+            <h2 className="text-2xl font-bold text-gray-800">Produits Récents</h2>
           </div>
           <Link 
             to="/products/create" 
             className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-bold hover:from-blue-700 hover:to-purple-700 transition transform hover:scale-105 shadow-lg"
           >
-            ➕ Add New Product
+            + Ajouter un Produit
           </Link>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="bg-gradient-to-r from-gray-50 to-gray-100">
-                <th className="px-6 py-4 text-left font-bold text-gray-700">Name</th>
-                <th className="px-6 py-4 text-left font-bold text-gray-700">Category</th>
-                <th className="px-6 py-4 text-left font-bold text-gray-700">Price</th>
+                <th className="px-6 py-4 text-left font-bold text-gray-700">Nom</th>
+                <th className="px-6 py-4 text-left font-bold text-gray-700">Catégorie</th>
+                <th className="px-6 py-4 text-left font-bold text-gray-700">Prix</th>
                 <th className="px-6 py-4 text-left font-bold text-gray-700">Stock</th>
-                <th className="px-6 py-4 text-left font-bold text-gray-700">Created</th>
+                <th className="px-6 py-4 text-left font-bold text-gray-700">Créé le</th>
                 <th className="px-6 py-4 text-left font-bold text-gray-700">Actions</th>
               </tr>
             </thead>
@@ -200,10 +200,10 @@ const Dashboard = () => {
                   <td className="px-6 py-4 font-semibold text-gray-800">{product.name}</td>
                   <td className="px-6 py-4">
                     <span className="bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
-                      {product.category}
+                      {categoryLabels[product.category] || product.category}
                     </span>
                   </td>
-                  <td className="px-6 py-4 font-bold text-green-600 text-lg">${product.price}</td>
+                  <td className="px-6 py-4 font-bold text-green-600 text-lg">{product.price} €</td>
                   <td className="px-6 py-4">
                     <span className={`px-3 py-1 rounded-full text-sm font-bold ${
                       product.stock < 20 ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
@@ -212,14 +212,14 @@ const Dashboard = () => {
                     </span>
                   </td>
                   <td className="px-6 py-4 text-gray-600">
-                    {new Date(product.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    {new Date(product.createdAt).toLocaleDateString('fr-FR', { month: 'short', day: 'numeric', year: 'numeric' })}
                   </td>
                   <td className="px-6 py-4">
                     <Link
                       to={`/products/edit/${product._id}`}
                       className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition inline-block"
                     >
-                      ✏️ Edit
+                      Modifier
                     </Link>
                   </td>
                 </tr>

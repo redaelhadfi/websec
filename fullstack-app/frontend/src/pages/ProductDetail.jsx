@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from '../utils/axios';
+import categoryLabels from '../utils/categoryLabels';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -20,7 +21,7 @@ const ProductDetail = () => {
       setProduct(response.data.data);
       setError('');
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to fetch product');
+      setError(err.response?.data?.message || 'Échec du chargement du produit');
     } finally {
       setLoading(false);
     }
@@ -41,7 +42,7 @@ const ProductDetail = () => {
           {error}
         </div>
         <Link to="/products" className="text-blue-600 hover:underline mt-4 inline-block">
-          ← Back to Products
+          ← Retour aux Produits
         </Link>
       </div>
     );
@@ -52,7 +53,7 @@ const ProductDetail = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <Link to="/products" className="text-blue-600 hover:underline mb-6 inline-block">
-        ← Back to Products
+        ← Retour aux Produits
       </Link>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white rounded-lg shadow-lg p-8">
@@ -69,7 +70,7 @@ const ProductDetail = () => {
             <h1 className="text-3xl font-bold">{product.name}</h1>
             {product.featured && (
               <span className="bg-yellow-100 text-yellow-800 text-sm px-3 py-1 rounded-full">
-                Featured
+                En Vedette
               </span>
             )}
           </div>
@@ -78,33 +79,33 @@ const ProductDetail = () => {
 
           <div className="space-y-4 mb-6">
             <div className="flex items-center justify-between border-b pb-2">
-              <span className="text-gray-600">Price:</span>
-              <span className="text-3xl font-bold text-blue-600">${product.price}</span>
+              <span className="text-gray-600">Prix :</span>
+              <span className="text-3xl font-bold text-blue-600">{product.price} €</span>
             </div>
 
             <div className="flex items-center justify-between border-b pb-2">
-              <span className="text-gray-600">Category:</span>
-              <span className="font-semibold">{product.category}</span>
+              <span className="text-gray-600">Catégorie :</span>
+              <span className="font-semibold">{categoryLabels[product.category] || product.category}</span>
             </div>
 
             <div className="flex items-center justify-between border-b pb-2">
-              <span className="text-gray-600">Stock:</span>
+              <span className="text-gray-600">Stock :</span>
               <span className={`font-semibold ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {product.stock > 0 ? `${product.stock} available` : 'Out of stock'}
+                {product.stock > 0 ? `${product.stock} disponible(s)` : 'Rupture de stock'}
               </span>
             </div>
 
             {product.createdBy && (
               <div className="flex items-center justify-between border-b pb-2">
-                <span className="text-gray-600">Seller:</span>
+                <span className="text-gray-600">Vendeur :</span>
                 <span className="font-semibold">{product.createdBy.name}</span>
               </div>
             )}
 
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">Added:</span>
+              <span className="text-gray-600">Ajouté le :</span>
               <span className="text-sm text-gray-500">
-                {new Date(product.createdAt).toLocaleDateString()}
+                {new Date(product.createdAt).toLocaleDateString('fr-FR')}
               </span>
             </div>
           </div>
@@ -114,10 +115,10 @@ const ProductDetail = () => {
               disabled={product.stock === 0}
               className="btn-primary w-full"
             >
-              {product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
+              {product.stock > 0 ? 'Ajouter au Panier' : 'Rupture de Stock'}
             </button>
             <button className="btn-secondary w-full">
-              Add to Wishlist
+              Ajouter aux Favoris
             </button>
           </div>
         </div>

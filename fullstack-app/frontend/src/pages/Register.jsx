@@ -18,12 +18,12 @@ const Register = () => {
     setError('');
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      setError('Les mots de passe ne correspondent pas');
       return;
     }
 
     if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError('Le mot de passe doit contenir au moins 6 caractères');
       return;
     }
 
@@ -44,7 +44,7 @@ const Register = () => {
     <div className="min-h-screen flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full">
         <div className="bg-white rounded-lg shadow-lg p-8">
-          <h2 className="text-3xl font-bold text-center mb-8">Register</h2>
+          <h2 className="text-3xl font-bold text-center mb-8">Inscription</h2>
 
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -55,7 +55,7 @@ const Register = () => {
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Name
+                Nom
               </label>
               <input
                 type="text"
@@ -63,14 +63,14 @@ const Register = () => {
                 value={formData.name}
                 onChange={handleChange}
                 className="input-field"
-                placeholder="Enter your name"
+                placeholder="Entrer votre nom"
                 required
               />
             </div>
 
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Email
+                E-mail
               </label>
               <input
                 type="email"
@@ -78,14 +78,14 @@ const Register = () => {
                 value={formData.email}
                 onChange={handleChange}
                 className="input-field"
-                placeholder="Enter your email"
+                placeholder="Entrer votre e-mail"
                 required
               />
             </div>
 
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Password
+                Mot de passe
               </label>
               <input
                 type="password"
@@ -93,14 +93,14 @@ const Register = () => {
                 value={formData.password}
                 onChange={handleChange}
                 className="input-field"
-                placeholder="Enter your password"
+                placeholder="Entrer votre mot de passe"
                 required
               />
             </div>
 
             <div className="mb-6">
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Confirm Password
+                Confirmer le Mot de Passe
               </label>
               <input
                 type="password"
@@ -108,7 +108,7 @@ const Register = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 className="input-field"
-                placeholder="Confirm your password"
+                placeholder="Confirmer votre mot de passe"
                 required
               />
             </div>
@@ -118,15 +118,15 @@ const Register = () => {
               disabled={loading}
               className="btn-primary w-full"
             >
-              {loading ? 'Creating Account...' : 'Register'}
+              {loading ? 'Création du compte...' : "S'inscrire"}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-gray-600">
-              Already have an account?{' '}
+              Vous avez déjà un compte ?{' '}
               <Link to="/login" className="text-blue-600 hover:text-blue-800 font-semibold">
-                Login here
+                Connectez-vous ici
               </Link>
             </p>
           </div>

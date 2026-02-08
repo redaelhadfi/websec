@@ -14,42 +14,42 @@ const Navbar = () => {
 
           <div className="flex items-center space-x-6">
             <Link to="/" className="text-gray-700 hover:text-blue-600 transition">
-              Home
+              Accueil
             </Link>
             <Link to="/products" className="text-gray-700 hover:text-blue-600 transition">
-              Products
+              Produits
             </Link>
             
             {user ? (
               <>
                 {isAdmin() && (
                   <Link to="/dashboard" className="text-gray-700 hover:text-blue-600 transition">
-                    Dashboard
+                    Tableau de Bord
                   </Link>
                 )}
                 <div className="flex items-center space-x-4">
                   <span className="text-gray-700">
-                    Welcome, <span className="font-semibold">{user.name}</span>
+                    Bienvenue, <span className="font-semibold">{user.name}</span>
                     {isAdmin() && <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Admin</span>}
                   </span>
                   <button
                     onClick={logout}
                     className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
                   >
-                    Logout
+                    Déconnexion
                   </button>
                 </div>
               </>
             ) : (
               <>
                 <Link to="/login" className="text-gray-700 hover:text-blue-600 transition">
-                  Login
+                  Connexion
                 </Link>
                 <Link
                   to="/register"
                   className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
                 >
-                  Register
+                  Inscription
                 </Link>
               </>
             )}

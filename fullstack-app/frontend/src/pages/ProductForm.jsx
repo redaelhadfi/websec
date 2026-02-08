@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from '../utils/axios';
+import categoryLabels from '../utils/categoryLabels';
 
 const ProductForm = () => {
   const { id } = useParams();
@@ -43,7 +44,7 @@ const ProductForm = () => {
       setValue('featured', product.featured);
       setImagePreview(product.image);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to fetch product');
+      setError(err.response?.data?.message || 'Échec du chargement du produit');
     }
   };
 
@@ -88,7 +89,7 @@ const ProductForm = () => {
 
       navigate('/products');
     } catch (err) {
-      setError(err.response?.data?.message || `Failed to ${isEditMode ? 'update' : 'create'} product`);
+      setError(err.response?.data?.message || `Échec de la ${isEditMode ? 'mise à jour' : 'création'} du produit`);
     } finally {
       setLoading(false);
     }
@@ -98,7 +99,7 @@ const ProductForm = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-2xl mx-auto">
         <h1 className="text-3xl font-bold mb-8">
-          {isEditMode ? 'Edit Product' : 'Create New Product'}
+          {isEditMode ? 'Modifier le Produit' : 'Créer un Nouveau Produit'}
         </h1>
 
         {error && (
@@ -110,15 +111,15 @@ const ProductForm = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="bg-white rounded-lg shadow-lg p-8">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Product Name *
+              Nom du Produit *
             </label>
             <input
               {...register('name', {
-                required: 'Product name is required',
-                minLength: { value: 3, message: 'Name must be at least 3 characters' }
+                required: 'Le nom du produit est requis',
+                minLength: { value: 3, message: 'Le nom doit contenir au moins 3 caractères' }
               })}
               className="input-field"
-              placeholder="Enter product name"
+              placeholder="Entrer le nom du produit"
             />
             {errors.name && (
               <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
@@ -131,12 +132,12 @@ const ProductForm = () => {
             </label>
             <textarea
               {...register('description', {
-                required: 'Description is required',
-                minLength: { value: 10, message: 'Description must be at least 10 characters' }
+                required: 'La description est requise',
+                minLength: { value: 10, message: 'La description doit contenir au moins 10 caractères' }
               })}
               className="input-field"
               rows="4"
-              placeholder="Enter product description"
+              placeholder="Entrer la description du produit"
             />
             {errors.description && (
               <p className="text-red-500 text-xs mt-1">{errors.description.message}</p>
@@ -146,14 +147,14 @@ const ProductForm = () => {
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Price ($) *
+                Prix (€) *
               </label>
               <input
                 type="number"
                 step="0.01"
                 {...register('price', {
-                  required: 'Price is required',
-                  min: { value: 0, message: 'Price must be positive' }
+                  required: 'Le prix est requis',
+                  min: { value: 0, message: 'Le prix doit être positif' }
                 })}
                 className="input-field"
                 placeholder="0.00"
@@ -170,8 +171,8 @@ const ProductForm = () => {
               <input
                 type="number"
                 {...register('stock', {
-                  required: 'Stock is required',
-                  min: { value: 0, message: 'Stock must be positive' }
+                  required: 'Le stock est requis',
+                  min: { value: 0, message: 'Le stock doit être positif' }
                 })}
                 className="input-field"
                 placeholder="0"
@@ -184,18 +185,18 @@ const ProductForm = () => {
 
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Category *
+              Catégorie *
             </label>
             <select {...register('category')} className="input-field">
               {categories.map(cat => (
-                <option key={cat} value={cat}>{cat}</option>
+                <option key={cat} value={cat}>{categoryLabels[cat] || cat}</option>
               ))}
             </select>
           </div>
 
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Product Image
+              Image du Produit
             </label>
             <input
               type="file"
@@ -210,7 +211,7 @@ const ProductForm = () => {
                   src={imagePreview.startsWith('http') || imagePreview.startsWith('data:') 
                     ? imagePreview 
                     : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${imagePreview}`}
-                  alt="Preview"
+                  alt="Aperçu"
                   className="w-32 h-32 object-cover rounded"
                 />
               </div>
@@ -225,7 +226,7 @@ const ProductForm = () => {
                 className="mr-2"
               />
               <span className="text-gray-700 text-sm font-bold">
-                Mark as Featured
+                Marquer comme En Vedette
               </span>
             </label>
           </div>
@@ -236,14 +237,14 @@ const ProductForm = () => {
               disabled={loading}
               className="btn-primary flex-1"
             >
-              {loading ? 'Saving...' : (isEditMode ? 'Update Product' : 'Create Product')}
+              {loading ? 'Enregistrement...' : (isEditMode ? 'Mettre à Jour' : 'Créer le Produit')}
             </button>
             <button
               type="button"
               onClick={() => navigate('/products')}
               className="btn-secondary flex-1"
             >
-              Cancel
+              Annuler
             </button>
           </div>
         </form>

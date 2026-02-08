@@ -3,6 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import axios from '../utils/axios';
 import ProductCard from '../components/ProductCard';
 import { useAuth } from '../hooks/useAuth';
+import categoryLabels from '../utils/categoryLabels';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -53,7 +54,7 @@ const Products = () => {
       });
       setError('');
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to fetch products');
+      setError(err.response?.data?.message || 'Échec du chargement des produits');
     } finally {
       setLoading(false);
     }
@@ -78,26 +79,26 @@ const Products = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this product?')) return;
+    if (!window.confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) return;
 
     try {
       await axios.delete(`/api/products/${id}`);
       fetchProducts();
     } catch (err) {
-      alert(err.response?.data?.message || 'Failed to delete product');
+      alert(err.response?.data?.message || 'Échec de la suppression du produit');
     }
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Products</h1>
+        <h1 className="text-3xl font-bold">Produits</h1>
         {isAdmin() && (
           <Link
             to="/products/create"
             className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
           >
-            + Add Product
+            + Ajouter un Produit
           </Link>
         )}
       </div>
@@ -105,52 +106,52 @@ const Products = () => {
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Search</label>
+            <label className="block text-sm font-medium mb-2">Recherche</label>
             <input
               type="text"
               value={filters.search}
               onChange={(e) => handleFilterChange('search', e.target.value)}
-              placeholder="Search products..."
+              placeholder="Rechercher des produits..."
               className="input-field"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Category</label>
+            <label className="block text-sm font-medium mb-2">Catégorie</label>
             <select
               value={filters.category}
               onChange={(e) => handleFilterChange('category', e.target.value)}
               className="input-field"
             >
               {categories.map(cat => (
-                <option key={cat} value={cat}>{cat}</option>
+                <option key={cat} value={cat}>{categoryLabels[cat] || cat}</option>
               ))}
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Sort By</label>
+            <label className="block text-sm font-medium mb-2">Trier par</label>
             <select
               value={filters.sortBy}
               onChange={(e) => handleFilterChange('sortBy', e.target.value)}
               className="input-field"
             >
               <option value="createdAt">Date</option>
-              <option value="name">Name</option>
-              <option value="price">Price</option>
+              <option value="name">Nom</option>
+              <option value="price">Prix</option>
               <option value="stock">Stock</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Order</label>
+            <label className="block text-sm font-medium mb-2">Ordre</label>
             <select
               value={filters.order}
               onChange={(e) => handleFilterChange('order', e.target.value)}
               className="input-field"
             >
-              <option value="asc">Ascending</option>
-              <option value="desc">Descending</option>
+              <option value="asc">Croissant</option>
+              <option value="desc">Décroissant</option>
             </select>
           </div>
         </div>
@@ -166,7 +167,7 @@ const Products = () => {
         </div>
       ) : products.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-xl text-gray-600">No products found</p>
+          <p className="text-xl text-gray-600">Aucun produit trouvé</p>
         </div>
       ) : (
         <>
@@ -188,7 +189,7 @@ const Products = () => {
                 disabled={pagination.currentPage === 1}
                 className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 disabled:opacity-50"
               >
-                Previous
+                Précédent
               </button>
               
               {[...Array(pagination.pages)].map((_, i) => (
@@ -210,7 +211,7 @@ const Products = () => {
                 disabled={pagination.currentPage === pagination.pages}
                 className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 disabled:opacity-50"
               >
-                Next
+                Suivant
               </button>
             </div>
           )}
