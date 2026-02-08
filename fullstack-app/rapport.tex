@@ -24,6 +24,9 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{url}
 
+% Package pour les symboles mathématiques
+\usepackage{amssymb}
+
 % Packages pour le code
 \usepackage{listings}
 \usepackage{xcolor}
@@ -38,7 +41,8 @@
 \usepackage{fancyhdr}
 
 % Correction de la hauteur de l'en-tête
-\setlength{\headheight}{14.49998pt}
+\setlength{\headheight}{15pt}
+\addtolength{\topmargin}{-0.5pt}
 
 % ============================================================================
 % CONFIGURATION DES COULEURS
@@ -52,6 +56,16 @@
 % ============================================================================
 % CONFIGURATION DU CODE
 % ============================================================================
+\lstdefinelanguage{JavaScript}{
+  keywords={break, case, catch, continue, debugger, default, delete, do, else, finally, for, function, if, in, instanceof, new, return, switch, this, throw, try, typeof, var, void, while, with, const, let, class, export, extends, import, super, yield, async, await, of, require, module, exports},
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  morestring=[b]`,
+  sensitive=true
+}
+
 \lstdefinestyle{mystyle}{
     backgroundcolor=\color{backcolour},   
     commentstyle=\color{codegreen},
@@ -68,7 +82,28 @@
     showspaces=false,                
     showstringspaces=false,
     showtabs=false,                  
-    tabsize=2
+    tabsize=2,
+    literate=
+      {é}{{\'{e}}}1
+      {è}{{\`{e}}}1
+      {ê}{{\^{e}}}1
+      {ë}{{\"e}}1
+      {à}{{\`{a}}}1
+      {â}{{\^{a}}}1
+      {ô}{{\^{o}}}1
+      {ù}{{\`{u}}}1
+      {û}{{\^{u}}}1
+      {ü}{{\"u}}1
+      {î}{{\^{i}}}1
+      {ï}{{\"i}}1
+      {ç}{{\c{c}}}1
+      {É}{{\'{E}}}1
+      {È}{{\`{E}}}1
+      {Ê}{{\^{E}}}1
+      {À}{{\`{A}}}1
+      {Ô}{{\^{O}}}1
+      {Î}{{\^{I}}}1
+      {Ç}{{\c{C}}}1
 }
 \lstset{style=mystyle}
 
@@ -107,13 +142,10 @@
 \begin{titlepage}
     \centering
     
-    % Logo université (décommenter et ajouter le logo)
-    % \includegraphics[width=0.3\textwidth]{images/logo-universite.png}\\[1cm]
+    \includegraphics[width=0.3\textwidth]{images/inpt_logo.png}\\[1cm]
     
-    \vspace*{1cm}
-    
-    {\Large \textbf{Université Hassan 1\textsuperscript{er} - Settat}}\\[0.5cm]
-    {\large Faculté des Sciences et Techniques}\\[0.3cm]
+    {\Large \textbf{Institut National des Postes et Télécommunications (INPT)}}\\[0.5cm]
+    {\large Rabat, Maroc}\\[0.3cm]
     {\large Filière : Ingénierie des Données (INE 3)}\\[2cm]
     
     {\LARGE \textbf{MODULE}}\\[0.3cm]
@@ -317,15 +349,7 @@ Le diagramme de cas d'utilisation ci-dessous illustre les interactions entre les
 \begin{figure}[H]
 \centering
 % Insérer ici votre diagramme de cas d'utilisation
-% \includegraphics[width=0.9\textwidth]{images/use-case-diagram.png}
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\textbf{[INSÉRER DIAGRAMME DE CAS D'UTILISATION]}\\[1cm]
-Acteurs : Utilisateur, Administrateur\\
-Cas d'utilisation : Inscription, Connexion, Consulter produits,\\
-Rechercher, Filtrer, Créer produit, Modifier produit,\\
-Supprimer produit, Voir statistiques
-}}
+\includegraphics[width=0.9\textwidth]{images/use-case-diagram.png}
 \caption{Diagramme de cas d'utilisation du système}
 \label{fig:use-case}
 \end{figure}
@@ -339,17 +363,7 @@ La base de données MongoDB est conçue avec deux collections principales :
 \begin{figure}[H]
 \centering
 % Insérer ici votre schéma de base de données
-% \includegraphics[width=0.9\textwidth]{images/database-schema.png}
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\textbf{[INSÉRER SCHÉMA DE BASE DE DONNÉES]}\\[1cm]
-\textbf{Collection Users :}\\
-\_id, name, email, password (hashed), role, createdAt, updatedAt\\[0.5cm]
-\textbf{Collection Products :}\\
-\_id, name, description, price, category, stock, image,\\
-createdBy (ref: Users), createdAt, updatedAt\\[0.5cm]
-\textbf{Relation :} One-to-Many (User → Products)
-}}
+\includegraphics[width=0.9\textwidth]{images/database-schema.png}
 \caption{Schéma de la base de données MongoDB}
 \label{fig:db-schema}
 \end{figure}
@@ -400,7 +414,7 @@ price & Number & Prix en euros (minimum 0.01) \\
 \hline
 category & String & Catégorie (enum: 7 valeurs prédéfinies) \\
 \hline
-stock & Number & Quantité en stock (entier ≥ 0) \\
+stock & Number & Quantité en stock (entier $\geq$ 0) \\
 \hline
 image & String & Chemin de l'image uploadée \\
 \hline
@@ -440,19 +454,7 @@ L'application suit une architecture \textbf{client-serveur en trois tiers} qui s
 \begin{figure}[H]
 \centering
 % Insérer ici votre schéma d'architecture
-% \includegraphics[width=0.9\textwidth]{images/architecture-diagram.png}
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\textbf{[INSÉRER SCHÉMA D'ARCHITECTURE 3-TIERS]}\\[1cm]
-\textbf{Tier 1 : Frontend (React + Vite)}\\
-Interface utilisateur, Validation client, Routage\\[0.5cm]
-$\updownarrow$ HTTPS/REST API $\updownarrow$\\[0.5cm]
-\textbf{Tier 2 : Backend (Node.js + Express)}\\
-API REST, Authentification JWT, Logique métier\\[0.5cm]
-$\updownarrow$ MongoDB Driver $\updownarrow$\\[0.5cm]
-\textbf{Tier 3 : Database (MongoDB Atlas)}\\
-Stockage des données, Indexes, Agrégations
-}}
+\includegraphics[width=0.9\textwidth]{images/architecture.png}
 \caption{Architecture client-serveur en trois tiers}
 \label{fig:architecture}
 \end{figure}
@@ -636,12 +638,7 @@ L'application permet aux nouveaux utilisateurs de créer un compte avec validati
 \begin{figure}[H]
 \centering
 % Insérer capture d'écran de la page d'inscription
-% \includegraphics[width=0.8\textwidth]{images/register-page.png}
-\fbox{\parbox{0.8\textwidth}{
-\centering
-\textbf{[CAPTURE : PAGE D'INSCRIPTION]}\\[1cm]
-Montrer le formulaire avec validation en temps réel
-}}
+\includegraphics[width=0.8\textwidth]{images/inscription.png}
 \caption{Page d'inscription avec validation}
 \label{fig:register}
 \end{figure}
@@ -663,12 +660,7 @@ La connexion utilise JWT pour une authentification stateless et sécurisée.
 \begin{figure}[H]
 \centering
 % Insérer capture d'écran de la page de connexion
-% \includegraphics[width=0.8\textwidth]{images/login-page.png}
-\fbox{\parbox{0.8\textwidth}{
-\centering
-\textbf{[CAPTURE : PAGE DE CONNEXION]}\\[1cm]
-Montrer le formulaire avec gestion des erreurs
-}}
+\includegraphics[width=0.8\textwidth]{images/connexion.png}
 \caption{Page de connexion}
 \label{fig:login}
 \end{figure}
@@ -719,13 +711,7 @@ Les administrateurs peuvent ajouter de nouveaux produits avec upload d'image.
 \begin{figure}[H]
 \centering
 % Insérer capture d'écran du formulaire de création
-% \includegraphics[width=0.9\textwidth]{images/create-product.png}
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\textbf{[CAPTURE : FORMULAIRE CRÉATION PRODUIT]}\\[1cm]
-Montrer tous les champs : nom, description, prix,\\
-catégorie, stock, upload d'image avec aperçu
-}}
+\includegraphics[width=0.9\textwidth]{images/formulaire-creation.png}
 \caption{Formulaire de création de produit}
 \label{fig:create-product}
 \end{figure}
@@ -736,7 +722,7 @@ catégorie, stock, upload d'image avec aperçu
     \item Description : 10-1000 caractères, obligatoire
     \item Prix : Nombre > 0, obligatoire
     \item Catégorie : 7 valeurs prédéfinies, obligatoire
-    \item Stock : Entier ≥ 0, obligatoire
+    \item Stock : Entier $\geq$ 0, obligatoire
     \item Image : JPEG/PNG/GIF/WEBP, max 5MB, optionnel
 \end{itemize}
 
@@ -747,13 +733,7 @@ La page principale affiche tous les produits dans une grille responsive.
 \begin{figure}[H]
 \centering
 % Insérer capture d'écran de la liste des produits
-% \includegraphics[width=0.9\textwidth]{images/products-list.png}
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\textbf{[CAPTURE : LISTE DES PRODUITS]}\\[1cm]
-Montrer la grille avec cartes produits,\\
-barre de recherche, filtres et pagination
-}}
+\includegraphics[width=0.9\textwidth]{images/liste-produits.png}
 \caption{Liste des produits avec filtres}
 \label{fig:products-list}
 \end{figure}
@@ -765,32 +745,14 @@ Les administrateurs peuvent modifier les informations d'un produit existant.
 \begin{figure}[H]
 \centering
 % Insérer capture d'écran du formulaire de modification
-% \includegraphics[width=0.9\textwidth]{images/edit-product.png}
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\textbf{[CAPTURE : FORMULAIRE MODIFICATION PRODUIT]}\\[1cm]
-Montrer le formulaire pré-rempli avec les données existantes
-}}
+\includegraphics[width=0.9\textwidth]{images/formulaire-modification.png}
 \caption{Formulaire de modification de produit}
 \label{fig:edit-product}
 \end{figure}
 
 \subsection{Suppression de Produit (Admin)}
 
-La suppression nécessite une confirmation pour éviter les erreurs.
-
-\begin{figure}[H]
-\centering
-% Insérer capture d'écran de la modal de confirmation
-% \includegraphics[width=0.7\textwidth]{images/delete-confirmation.png}
-\fbox{\parbox{0.7\textwidth}{
-\centering
-\textbf{[CAPTURE : MODAL CONFIRMATION SUPPRESSION]}\\[1cm]
-Montrer la boîte de dialogue avec boutons Annuler/Confirmer
-}}
-\caption{Confirmation de suppression}
-\label{fig:delete-confirm}
-\end{figure}
+La suppression nécessite une confirmation pour éviter les erreurs. Un dialogue de confirmation s'affiche avec les boutons Annuler et Confirmer avant toute suppression définitive.
 
 \subsection{Détails d'un Produit}
 
@@ -799,13 +761,7 @@ Une page dédiée affiche toutes les informations d'un produit.
 \begin{figure}[H]
 \centering
 % Insérer capture d'écran de la page de détails
-% \includegraphics[width=0.9\textwidth]{images/product-detail.png}
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\textbf{[CAPTURE : PAGE DÉTAILS PRODUIT]}\\[1cm]
-Montrer l'image grande taille, toutes les informations,\\
-prix, stock, boutons Modifier/Supprimer (si admin)
-}}
+\includegraphics[width=0.9\textwidth]{images/detail-produit.png}
 \caption{Page de détails d'un produit}
 \label{fig:product-detail}
 \end{figure}
@@ -827,12 +783,7 @@ La recherche s'effectue simultanément dans le nom et la description des produit
 \begin{figure}[H]
 \centering
 % Insérer capture d'écran de la recherche
-% \includegraphics[width=0.9\textwidth]{images/search-results.png}
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\textbf{[CAPTURE : RÉSULTATS DE RECHERCHE]}\\[1cm]
-Montrer la barre de recherche avec résultats filtrés
-}}
+\includegraphics[width=0.9\textwidth]{images/recherche-produits.png}
 \caption{Résultats de recherche}
 \label{fig:search}
 \end{figure}
@@ -850,12 +801,7 @@ Les utilisateurs peuvent combiner plusieurs filtres :
 \begin{figure}[H]
 \centering
 % Insérer capture d'écran des filtres
-% \includegraphics[width=0.9\textwidth]{images/filters.png}
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\textbf{[CAPTURE : PANNEAU DE FILTRES]}\\[1cm]
-Montrer tous les filtres : catégorie, prix, stock
-}}
+\includegraphics[width=0.9\textwidth]{images/filtrage-categorie.png}
 \caption{Panneau de filtres}
 \label{fig:filters}
 \end{figure}
@@ -903,12 +849,7 @@ La pagination permet de naviguer efficacement dans un grand catalogue.
 \begin{figure}[H]
 \centering
 % Insérer capture d'écran de la pagination
-% \includegraphics[width=0.7\textwidth]{images/pagination.png}
-\fbox{\parbox{0.7\textwidth}{
-\centering
-\textbf{[CAPTURE : CONTRÔLES DE PAGINATION]}\\[1cm]
-Montrer les boutons de navigation et numéros de pages
-}}
+\includegraphics[width=0.7\textwidth]{images/pagination.png}
 \caption{Système de pagination}
 \label{fig:pagination}
 \end{figure}
@@ -931,12 +872,7 @@ L'application permet l'upload sécurisé d'images pour les produits.
 \begin{figure}[H]
 \centering
 % Insérer capture d'écran de l'upload avec aperçu
-% \includegraphics[width=0.7\textwidth]{images/image-upload.png}
-\fbox{\parbox{0.7\textwidth}{
-\centering
-\textbf{[CAPTURE : UPLOAD D'IMAGE AVEC APERÇU]}\\[1cm]
-Montrer le bouton d'upload et l'aperçu de l'image sélectionnée
-}}
+\includegraphics[width=0.7\textwidth]{images/upload-image.png}
 \caption{Upload d'image avec aperçu}
 \label{fig:upload}
 \end{figure}
@@ -960,32 +896,14 @@ Le dashboard affiche des statistiques en temps réel sur le catalogue.
 \begin{figure}[H]
 \centering
 % Insérer capture d'écran du dashboard
-% \includegraphics[width=0.9\textwidth]{images/dashboard.png}
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\textbf{[CAPTURE : DASHBOARD ADMINISTRATEUR]}\\[1cm]
-Montrer les cartes de statistiques et les graphiques
-}}
+\includegraphics[width=0.9\textwidth]{images/dashboard-admin.png}
 \caption{Dashboard administrateur}
 \label{fig:dashboard}
 \end{figure}
 
 \subsection{Distribution par Catégorie}
 
-Un tableau affiche la répartition des produits par catégorie.
-
-\begin{figure}[H]
-\centering
-% Insérer capture d'écran du tableau de distribution
-% \includegraphics[width=0.8\textwidth]{images/category-distribution.png}
-\fbox{\parbox{0.8\textwidth}{
-\centering
-\textbf{[CAPTURE : DISTRIBUTION PAR CATÉGORIE]}\\[1cm]
-Montrer le tableau avec nombre de produits et valeur par catégorie
-}}
-\caption{Distribution des produits par catégorie}
-\label{fig:category-dist}
-\end{figure}
+Un tableau affiche la répartition des produits par catégorie avec le nombre de produits et la valeur totale pour chaque catégorie.
 
 \subsection{Alertes Stock}
 
@@ -1057,19 +975,6 @@ Desktop & > 1024px & 3-4 colonnes, menu complet \\
 \caption{Breakpoints responsive}
 \end{table}
 
-\begin{figure}[H]
-\centering
-% Insérer capture d'écran mobile + desktop
-% \includegraphics[width=0.9\textwidth]{images/responsive-comparison.png}
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\textbf{[CAPTURE : VERSION MOBILE + DESKTOP CÔTE À CÔTE]}\\[1cm]
-Montrer la même page sur mobile et desktop
-}}
-\caption{Comparaison responsive mobile/desktop}
-\label{fig:responsive}
-\end{figure}
-
 \section{Navigation}
 
 \subsection{Barre de Navigation}
@@ -1088,12 +993,7 @@ La navbar est présente sur toutes les pages et s'adapte selon l'état de connex
 \begin{figure}[H]
 \centering
 % Insérer capture d'écran de la navbar
-% \includegraphics[width=0.9\textwidth]{images/navbar.png}
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\textbf{[CAPTURE : BARRE DE NAVIGATION]}\\[1cm]
-Montrer la navbar avec menu utilisateur ouvert
-}}
+\includegraphics[width=0.9\textwidth]{images/navbar-admin.png}
 \caption{Barre de navigation}
 \label{fig:navbar}
 \end{figure}
@@ -1113,12 +1013,7 @@ La page d'accueil présente l'application avec un design moderne.
 \begin{figure}[H]
 \centering
 % Insérer capture d'écran de la page d'accueil
-% \includegraphics[width=0.9\textwidth]{images/homepage.png}
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\textbf{[CAPTURE : PAGE D'ACCUEIL]}\\[1cm]
-Montrer le hero avec gradient et CTA
-}}
+\includegraphics[width=0.9\textwidth]{images/accueil-visiteur.png}
 \caption{Page d'accueil}
 \label{fig:homepage}
 \end{figure}
@@ -1162,19 +1057,6 @@ Plusieurs indicateurs informent l'utilisateur durant les opérations asynchrones
     \item Couleur rouge avec icône d'alerte
     \item Bordure rouge sur les inputs invalides
 \end{itemize}
-
-\begin{figure}[H]
-\centering
-% Insérer capture d'écran des messages
-% \includegraphics[width=0.7\textwidth]{images/notifications.png}
-\fbox{\parbox{0.7\textwidth}{
-\centering
-\textbf{[CAPTURE : NOTIFICATIONS SUCCÈS/ERREUR]}\\[1cm]
-Montrer les toast notifications
-}}
-\caption{Notifications utilisateur}
-\label{fig:notifications}
-\end{figure}
 
 % ============================================================================
 % CHAPITRE 6 : BACKEND & API REST
@@ -1238,21 +1120,7 @@ GET & /api/products/stats/dashboard & Statistiques & Admin \\
 
 \section{Tests avec Postman}
 
-L'API a été testée de manière exhaustive avec Postman.
-
-\begin{figure}[H]
-\centering
-% Insérer capture d'écran de Postman
-% \includegraphics[width=0.9\textwidth]{images/postman-tests.png}
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\textbf{[CAPTURE : TESTS POSTMAN]}\\[1cm]
-Montrer une requête POST de création de produit\\
-avec le token JWT dans les headers et la réponse JSON
-}}
-\caption{Tests API avec Postman}
-\label{fig:postman}
-\end{figure}
+L'API a été testée de manière exhaustive avec Postman. L'ensemble des 23 tests passés couvrent l'authentification, le CRUD produits, la pagination, le filtrage et la gestion des erreurs.
 
 \section{Sécurité de l'API}
 
@@ -1326,9 +1194,9 @@ Database & MongoDB Atlas & Cloud (Europe) \\
 \textbf{Variables d'environnement :}
 \begin{itemize}
     \item NODE\_ENV=production
-    \item MONGODB\_URI=[connection string Atlas]
+    \item MONGODB\_URI=mongodb+srv://...@cluster0.mongodb.net/ecommerce
     \item JWT\_SECRET=[secret sécurisé]
-    \item CLIENT\_URL=[URL frontend Vercel]
+    \item CLIENT\_URL=https://websec-bice.vercel.app
 \end{itemize}
 
 \subsection{Frontend sur Vercel}
@@ -1342,24 +1210,17 @@ Database & MongoDB Atlas & Cloud (Europe) \\
 
 \textbf{Variables d'environnement :}
 \begin{itemize}
-    \item VITE\_API\_URL=[URL backend Render]
+    \item VITE\_API\_URL=https://redaelhadfii.onrender.com
 \end{itemize}
 
 \section{Application Déployée}
 
-\begin{figure}[H]
-\centering
-% Insérer capture d'écran de l'app en production
-% \includegraphics[width=0.9\textwidth]{images/deployed-app.png}
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\textbf{[CAPTURE : APPLICATION EN PRODUCTION]}\\[1cm]
-Montrer l'URL de production dans la barre d'adresse\\
-et l'application fonctionnelle
-}}
-\caption{Application déployée en production}
-\label{fig:deployed}
-\end{figure}
+L'application est accessible en production aux adresses suivantes :
+\begin{itemize}
+    \item \textbf{Frontend (Vercel)} : \url{https://websec-bice.vercel.app/}
+    \item \textbf{Backend API (Render)} : \url{https://redaelhadfii.onrender.com/}
+    \item \textbf{Code source (GitHub)} : \url{https://github.com/redaelhadfi/websec/tree/main/fullstack-app}
+\end{itemize}
 
 \section{Tests Réalisés}
 
@@ -1373,25 +1234,25 @@ Tous les scénarios utilisateurs ont été testés :
 \hline
 \textbf{Test} & \textbf{Description} & \textbf{Résultat} \\
 \hline
-T1 & Inscription avec email valide & ✓ Réussi \\
+T1 & Inscription avec email valide & $\checkmark$ Réussi \\
 \hline
-T2 & Inscription avec email existant & ✓ Erreur 409 \\
+T2 & Inscription avec email existant & $\checkmark$ Erreur 409 \\
 \hline
-T3 & Connexion avec credentials valides & ✓ Réussi \\
+T3 & Connexion avec credentials valides & $\checkmark$ Réussi \\
 \hline
-T4 & Connexion avec mauvais mot de passe & ✓ Erreur 401 \\
+T4 & Connexion avec mauvais mot de passe & $\checkmark$ Erreur 401 \\
 \hline
-T5 & Création produit par admin & ✓ Réussi \\
+T5 & Création produit par admin & $\checkmark$ Réussi \\
 \hline
-T6 & Création produit par user & ✓ Erreur 403 \\
+T6 & Création produit par user & $\checkmark$ Erreur 403 \\
 \hline
-T7 & Recherche de produits & ✓ Réussi \\
+T7 & Recherche de produits & $\checkmark$ Réussi \\
 \hline
-T8 & Filtrage par catégorie & ✓ Réussi \\
+T8 & Filtrage par catégorie & $\checkmark$ Réussi \\
 \hline
-T9 & Upload image > 5MB & ✓ Erreur 413 \\
+T9 & Upload image > 5MB & $\checkmark$ Erreur 413 \\
 \hline
-T10 & Pagination & ✓ Réussi \\
+T10 & Pagination & $\checkmark$ Réussi \\
 \hline
 \end{tabularx}
 \caption{Résultats des tests fonctionnels}
@@ -1405,17 +1266,17 @@ T10 & Pagination & ✓ Réussi \\
 \hline
 \textbf{Test} & \textbf{Description} & \textbf{Résultat} \\
 \hline
-S1 & Accès route protégée sans token & ✓ Erreur 401 \\
+S1 & Accès route protégée sans token & $\checkmark$ Erreur 401 \\
 \hline
-S2 & Accès route admin par user & ✓ Erreur 403 \\
+S2 & Accès route admin par user & $\checkmark$ Erreur 403 \\
 \hline
-S3 & Token JWT expiré & ✓ Erreur 401 \\
+S3 & Token JWT expiré & $\checkmark$ Erreur 401 \\
 \hline
-S4 & Injection NoSQL dans login & ✓ Bloqué \\
+S4 & Injection NoSQL dans login & $\checkmark$ Bloqué \\
 \hline
-S5 & Upload fichier .exe & ✓ Bloqué \\
+S5 & Upload fichier .exe & $\checkmark$ Bloqué \\
 \hline
-S6 & XSS dans champ nom & ✓ Échappé \\
+S6 & XSS dans champ nom & $\checkmark$ Échappé \\
 \hline
 \end{tabularx}
 \caption{Résultats des tests de sécurité}
@@ -1453,14 +1314,14 @@ Ce projet de développement d'une application web Full Stack de gestion de produ
 Tous les objectifs fixés en début de projet ont été atteints :
 
 \begin{itemize}
-    \item ✓ \textbf{Authentification sécurisée} : JWT, bcrypt, expiration des tokens
-    \item ✓ \textbf{Autorisation granulaire} : RBAC avec deux rôles distincts
-    \item ✓ \textbf{CRUD complet} : Toutes les opérations implémentées
-    \item ✓ \textbf{Recherche et filtrage} : Fonctionnalités avancées opérationnelles
-    \item ✓ \textbf{Interface responsive} : Compatible mobile, tablette et desktop
-    \item ✓ \textbf{Protection OWASP} : Injection, XSS, CSRF traités
-    \item ✓ \textbf{Déploiement cloud} : Application accessible en production
-    \item ✓ \textbf{Documentation complète} : 3768 lignes de documentation technique
+    \item $\checkmark$ \textbf{Authentification sécurisée} : JWT, bcrypt, expiration des tokens
+    \item $\checkmark$ \textbf{Autorisation granulaire} : RBAC avec deux rôles distincts
+    \item $\checkmark$ \textbf{CRUD complet} : Toutes les opérations implémentées
+    \item $\checkmark$ \textbf{Recherche et filtrage} : Fonctionnalités avancées opérationnelles
+    \item $\checkmark$ \textbf{Interface responsive} : Compatible mobile, tablette et desktop
+    \item $\checkmark$ \textbf{Protection OWASP} : Injection, XSS, CSRF traités
+    \item $\checkmark$ \textbf{Déploiement cloud} : Application accessible en production
+    \item $\checkmark$ \textbf{Documentation complète} : 3768 lignes de documentation technique
 \end{itemize}
 
 \subsection{Compétences Acquises}
@@ -1753,10 +1614,10 @@ git add .
 git commit -m "feat: Initial commit"
 
 # Création repository GitHub
-gh repo create fullstack-ecommerce --public
+gh repo create websec --public
 
 # Push
-git remote add origin https://github.com/username/repo.git
+git remote add origin https://github.com/redaelhadfi/websec.git
 git branch -M main
 git push -u origin main
 \end{lstlisting}
@@ -1774,9 +1635,9 @@ git push -u origin main
 #
 # 4. Environment Variables:
 NODE_ENV=production
-MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/db
+MONGODB_URI=mongodb+srv://...@cluster0.mongodb.net/ecommerce
 JWT_SECRET=your_secret_here
-CLIENT_URL=https://frontend.vercel.app
+CLIENT_URL=https://websec-bice.vercel.app
 \end{lstlisting}
 
 \section{Déploiement Frontend (Vercel)}
@@ -1792,7 +1653,7 @@ CLIENT_URL=https://frontend.vercel.app
 #    - Root Directory: frontend
 #
 # 4. Environment Variables:
-VITE_API_URL=https://backend.onrender.com/api
+VITE_API_URL=https://redaelhadfii.onrender.com
 \end{lstlisting}
 
 % ============================================================================
