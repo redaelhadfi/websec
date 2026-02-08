@@ -59,7 +59,7 @@ const ProductDetail = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white rounded-lg shadow-lg p-8">
         <div>
           <img
-            src={product.image.startsWith('http') ? product.image : `${API_URL}${product.image}`}
+            src={product.image}
             alt={product.name}
             className="w-full h-96 object-cover rounded-lg"
           />

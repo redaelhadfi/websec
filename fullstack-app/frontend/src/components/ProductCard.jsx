@@ -7,7 +7,7 @@ const ProductCard = ({ product, onDelete, isAdmin }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow">
       <img
-        src={product.image.startsWith('http') ? product.image : `${API_URL}${product.image}`}
+        src={product.image}
         alt={product.name}
         className="w-full h-48 object-cover"
       />

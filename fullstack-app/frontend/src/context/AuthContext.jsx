@@ -4,8 +4,13 @@ import { AuthContext } from './AuthContextProvider';
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : null;
+    try {
+      const storedUser = localStorage.getItem('user');
+      return storedUser ? JSON.parse(storedUser) : null;
+    } catch (error) {
+      console.warn('localStorage not available:', error);
+      return null;
+    }
   });
 
   const login = async (email, password) => {
@@ -13,8 +18,12 @@ const AuthProvider = ({ children }) => {
       const response = await axios.post('/api/auth/login', { email, password });
       const { token, user } = response.data.data;
       
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      try {
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+      } catch (error) {
+        console.warn('localStorage not available:', error);
+      }
       setUser(user);
       
       return { success: true };
